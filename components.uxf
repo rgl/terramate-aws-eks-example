@@ -1,0 +1,689 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>525</x>
+      <y>175</y>
+      <w>539</w>
+      <h>511</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;kubernetes cluster&gt;&gt;
+&lt;&lt;aws eks service&gt;&gt;
+aws-eks-example-dev
+lt=..</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>378</x>
+      <y>147</y>
+      <w>1113</w>
+      <h>665</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;aws account&gt;&gt;
+lt=..</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>539</x>
+      <y>224</y>
+      <w>511</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;control plane&gt;&gt;
+&lt;&lt;managed by aws&gt;&gt;
+lt=..</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>539</x>
+      <y>322</y>
+      <w>511</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;data plane&gt;&gt;
+lt=..</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>98</x>
+      <y>259</y>
+      <w>469</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=()-
+r1=https://&lt;id&gt;.eu-west-1.eks.amazonaws.com
+</panel_attributes>
+    <additional_attributes>10.0;20.0;650.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>553</x>
+      <y>259</y>
+      <w>70</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;service&gt;&gt;
+api-server</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>364</x>
+      <y>119</y>
+      <w>1141</w>
+      <h>707</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;aws region&gt;&gt;
+lt=..</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>567</x>
+      <y>420</y>
+      <w>70</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;service&gt;&gt;
+otel-example</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>392</x>
+      <y>420</y>
+      <w>119</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;l4 load balancer&gt;&gt;
+&lt;&lt;classic lb&gt;&gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>98</x>
+      <y>420</y>
+      <w>308</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=()-
+r1=http://&lt;id&gt;.eu-west-1.elb.amazonaws.com</panel_attributes>
+    <additional_attributes>10.0;20.0;420.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>504</x>
+      <y>427</y>
+      <w>77</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;90.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>651</x>
+      <y>385</y>
+      <w>105</w>
+      <h>161</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;pod&gt;&gt;
+otel-example</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>630</x>
+      <y>427</y>
+      <w>49</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;50.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>343</x>
+      <y>56</y>
+      <w>21</w>
+      <h>812</h>
+    </coordinates>
+    <panel_attributes>lt=..</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;1140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>357</x>
+      <y>77</y>
+      <w>147</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>private network (vpc) &gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>203</x>
+      <y>77</y>
+      <w>147</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>&lt; public network (internet)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>665</x>
+      <y>420</y>
+      <w>77</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;container&gt;&gt;
+otel-example</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1197</x>
+      <y>322</y>
+      <w>266</w>
+      <h>161</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;service&gt;&gt;
+&lt;&lt;managed by aws&gt;&gt;
+CloudWatch Logs</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1043</x>
+      <y>287</y>
+      <w>154</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>lt=-
+r2=&lt;&lt;push&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;90.0;10.0;100.0;20.0;100.0;140.0;110.0;150.0;200.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1015</x>
+      <y>434</y>
+      <w>182</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>lt=-
+r2=&lt;&lt;push&gt;&gt;
+</panel_attributes>
+    <additional_attributes>10.0;40.0;140.0;40.0;150.0;20.0;240.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>917</x>
+      <y>448</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;deployment&gt;&gt;
+adot-collector
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>791</x>
+      <y>448</y>
+      <w>49</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=()-
+</panel_attributes>
+    <additional_attributes>10.0;20.0;50.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>735</x>
+      <y>448</y>
+      <w>70</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=-(</panel_attributes>
+    <additional_attributes>10.0;20.0;70.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>945</x>
+      <y>700</y>
+      <w>119</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;service&gt;&gt;
+&lt;&lt;managed by aws&gt;&gt;
+container registry</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>966</x>
+      <y>749</y>
+      <w>77</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;image&gt;&gt;
+otel-example</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>721</x>
+      <y>525</y>
+      <w>238</w>
+      <h>252</h>
+    </coordinates>
+    <panel_attributes>lt=-
+r2=&lt;&lt;uses&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;330.0;20.0;340.0;320.0;340.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>938</x>
+      <y>756</y>
+      <w>42</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;40.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1183</x>
+      <y>273</y>
+      <w>294</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;product&gt;&gt;
+&lt;&lt;managed by aws&gt;&gt;
+CloudWatch
+lt=..</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>917</x>
+      <y>609</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;service&gt;&gt;
+cert-manager</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>826</x>
+      <y>448</y>
+      <w>77</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;service&gt;&gt;
+adot-collector</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>896</x>
+      <y>448</y>
+      <w>35</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>10.0;20.0;30.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>917</x>
+      <y>385</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;deployment&gt;&gt;
+adot-operator
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>945</x>
+      <y>413</y>
+      <w>77</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;manages&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>812</x>
+      <y>350</y>
+      <w>224</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;namespace&gt;&gt;
+opentelemetry-operator-system
+lt=..</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>553</x>
+      <y>350</y>
+      <w>217</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;namespace&gt;&gt;
+default
+lt=..</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>917</x>
+      <y>511</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;service account&gt;&gt;
+adot-collector
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1183</x>
+      <y>511</y>
+      <w>224</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;iam role&gt;&gt;
+aws-eks-example-dev-adot-collector-irsa
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>945</x>
+      <y>476</y>
+      <w>21</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1015</x>
+      <y>511</y>
+      <w>182</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;assume role&gt;&gt;
+lt=-&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1253</x>
+      <y>553</y>
+      <w>224</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;iam policy&gt;&gt;
+aws-eks-example-dev-adot-collector-irsa
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1218</x>
+      <y>539</y>
+      <w>49</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>50.0;40.0;20.0;40.0;10.0;30.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1211</x>
+      <y>371</y>
+      <w>238</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;log group&gt;&gt;
+/aws/eks/aws-eks-example-dev/cluster</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1176</x>
+      <y>385</y>
+      <w>49</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;50.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1211</x>
+      <y>427</y>
+      <w>238</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;log group&gt;&gt;
+/aws/eks/aws-eks-example-dev/adot</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1176</x>
+      <y>441</y>
+      <w>49</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;50.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>952</x>
+      <y>259</y>
+      <w>84</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;add-on&gt;&gt;
+adot-operator
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>875</x>
+      <y>259</y>
+      <w>63</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;add-on&gt;&gt;
+vpc-cni
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1183</x>
+      <y>224</y>
+      <w>224</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;kms key&gt;&gt;
+eks/aws-eks-example-dev
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1183</x>
+      <y>609</y>
+      <w>224</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;iam role&gt;&gt;
+aws-eks-example-dev-cert-manager-irsa
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1253</x>
+      <y>651</y>
+      <w>224</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;iam policy&gt;&gt;
+aws-eks-example-dev-cert-manager-irsa
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1183</x>
+      <y>175</y>
+      <w>224</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;iam role&gt;&gt;
+aws-eks-example-dev-cluster-&lt;id&gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1057</x>
+      <y>175</y>
+      <w>140</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;assume role&gt;&gt;
+lt=-&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;180.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1057</x>
+      <y>231</y>
+      <w>140</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;180.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>812</x>
+      <y>574</y>
+      <w>224</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;namespace&gt;&gt;
+cert-manager
+lt=..</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1218</x>
+      <y>637</y>
+      <w>49</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>50.0;40.0;20.0;40.0;10.0;30.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1015</x>
+      <y>609</y>
+      <w>182</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;assume role&gt;&gt;
+lt=-&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
+  </element>
+</diagram>

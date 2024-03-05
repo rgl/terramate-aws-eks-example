@@ -1,0 +1,9 @@
+tmp/
+.terraform/
+terraform.tfstate*
+.terraform.tfstate*
+terraform-graph.svg
+secrets.*
+*.tmp.png
+*.log
+kubeconfig.yml

@@ -29,7 +29,7 @@ variable "region" {
 variable "repository_name_path" {
   type = string
   validation {
-    condition     = can(regex("^[a-z][a-z0-9-]+(/[a-z][a-z0-9-]+)+$", var.repository_name_path))
+    condition     = can(regex("^[a-z][a-z0-9-]+(/[a-z][a-z0-9-]+)*$", var.repository_name_path))
     error_message = "Invalid repository_name_path."
   }
 }

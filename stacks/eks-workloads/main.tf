@@ -12,5 +12,6 @@ locals {
   images = {
     for key, value in var.source_images : key => "${local.ecr_domain}/${var.cluster_name}/${key}:${value.tag}"
   }
-  otel_example_image = local.images.otel-example
+  otel_example_image     = local.images.otel-example
+  kubernetes_hello_image = local.images.kubernetes-hello
 }

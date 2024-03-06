@@ -20,6 +20,13 @@ globals {
       # renovate: datasource=docker depName=rgl/opentelemetry-dotnet-playground registryUrl=https://ghcr.io
       tag = "0.0.4"
     }
+    kubernetes-hello = {
+      # see https://hub.docker.com/repository/docker/ruilopes/kubernetes-hello
+      # see https://github.com/rgl/kubernetes-hello
+      name = "docker.io/ruilopes/kubernetes-hello"
+      # renovate: datasource=docker depName=ruilopes/kubernetes-hello
+      tag = "v0.0.0.202402130912-test"
+    }
   }
 }
 

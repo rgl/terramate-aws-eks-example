@@ -104,6 +104,11 @@ wget -qO- "$(
   | jq
 ```
 
+**NB** The Kubernetes Service Account tokens are JSON Web Tokens (JWT) signed
+by the cluster OIDC provider. They can be validated using the metadata at the
+`cluster_oidc_configuration_url` endpoint. You can view a Service Account token
+at the installed `kubernetes-hello` service endpoint.
+
 Get the cluster `kubeconfig.yml` configuration file:
 
 ```bash
@@ -159,6 +164,27 @@ echo "otel-example service url: $otel_example_url"
 while [ -z "$(dig +short "$otel_example_domain")" ]; do sleep 5; done && dig "$otel_example_domain"
 # finally, access the service.
 wget -qO- "$otel_example_url/quote" | jq
+```
+
+Access the `kubernetes-hello` service from a [kubectl port-forward local port](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/):
+
+```bash
+kubectl port-forward service/kubernetes-hello 6789:80 &
+sleep 3 && printf '\n\n'
+wget -qO- http://localhost:6789
+kill %1 && sleep 3
+```
+
+Access the `kubernetes-hello` service from the Internet:
+
+```bash
+kubernetes_hello_domain="$(kubectl get service/kubernetes-hello -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')"
+kubernetes_hello_url="http://$kubernetes_hello_domain"
+echo "kubernetes-hello service url: $kubernetes_hello_url"
+# wait for the domain to resolve.
+while [ -z "$(dig +short "$kubernetes_hello_domain")" ]; do sleep 5; done && dig "$kubernetes_hello_domain"
+# finally, access the service.
+wget -qO- "$kubernetes_hello_url"
 ```
 
 Log in the container registry:

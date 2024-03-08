@@ -112,9 +112,12 @@ resource "kubernetes_service_v1" "kubernetes_hello" {
 }
 
 # see https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+# see https://kubernetes.io/docs/concepts/storage/projected-volumes/#serviceaccounttoken
+# see https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
 # see https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#deployment-v1-apps
 # see https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#podtemplatespec-v1-core
 # see https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#container-v1-core
+# see https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#serviceaccounttokenprojection-v1-core
 # see https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/deployment_v1
 resource "kubernetes_deployment_v1" "kubernetes_hello" {
   metadata {
@@ -168,6 +171,11 @@ resource "kubernetes_deployment_v1" "kubernetes_hello" {
             }
           }
           volume_mount {
+            name       = "tokens"
+            read_only  = true
+            mount_path = "/var/run/secrets/tokens"
+          }
+          volume_mount {
             name       = "secrets"
             read_only  = true
             mount_path = "/var/run/secrets/example"
@@ -189,6 +197,28 @@ resource "kubernetes_deployment_v1" "kubernetes_hello" {
             limits = {
               cpu    = "0.1"
               memory = "24Mi"
+            }
+          }
+        }
+        volume {
+          name = "tokens"
+          projected {
+            sources {
+              # NB the kubelet will periodically rotate this token.
+              # NB the token is rotated when its older than 80% of its time
+              #    to live or if the token is older than 24h.
+              # NB in production, set to a higher value (e.g. 3600 (1h)).
+              # NB the minimum allowed value is 600 (10m).
+              # NB this is equivalent of using the TokenRequest API.
+              #    see https://kubernetes.io/docs/reference/kubernetes-api/authentication-resources/token-request-v1/
+              # NB this is equivalent of executing:
+              #       kubectl create token kubernetes-hello --audience example.com --duration 600s
+              #    see https://kubernetes.io/docs/reference/kubectl/generated/kubectl_create/kubectl_create_token/
+              service_account_token {
+                path               = "example.com-jwt.txt"
+                audience           = "https://example.com"
+                expiration_seconds = 600
+              }
             }
           }
         }

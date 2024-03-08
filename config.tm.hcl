@@ -25,7 +25,7 @@ globals {
       # see https://github.com/rgl/kubernetes-hello
       name = "docker.io/ruilopes/kubernetes-hello"
       # renovate: datasource=docker depName=ruilopes/kubernetes-hello
-      tag = "v0.0.0.202402130912-test"
+      tag = "v0.0.0.202403070852-test"
     }
   }
 }

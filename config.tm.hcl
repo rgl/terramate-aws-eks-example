@@ -40,7 +40,7 @@ globals "terraform" {
 # see https://github.com/hashicorp/terraform-provider-aws
 globals "terraform" "providers" "aws" {
   # renovate: datasource=terraform-provider depName=hashicorp/aws
-  version = "5.39.1"
+  version = "5.40.0"
 }
 
 # see https://registry.terraform.io/providers/hashicorp/cloudinit
@@ -54,7 +54,7 @@ globals "terraform" "providers" "cloudinit" {
 # see https://github.com/hashicorp/terraform-provider-kubernetes
 globals "terraform" "providers" "kubernetes" {
   # renovate: datasource=terraform-provider depName=hashicorp/kubernetes
-  version = "2.26.0"
+  version = "2.27.0"
 }
 
 # see https://registry.terraform.io/providers/hashicorp/helm

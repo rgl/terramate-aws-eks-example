@@ -7,22 +7,10 @@ locals {
   adotcol_irsa_iam_role_name         = "${data.aws_eks_cluster.eks.name}-${local.adotcol_service_account_name}-irsa"
   adotcol_cloudwatch_log_group_name  = "/aws/eks/${data.aws_eks_cluster.eks.name}/${local.adotcol_name}"
   adotcol_cloudwatch_log_stream_name = local.adotcol_name
-  adot_addon_context = {
-    aws_caller_identity_account_id = data.aws_caller_identity.current.account_id
-    aws_caller_identity_arn        = data.aws_caller_identity.current.arn
-    aws_partition_id               = data.aws_partition.current.partition
-    aws_region_name                = var.region
-    aws_eks_cluster_endpoint       = data.aws_eks_cluster.eks.endpoint
-    eks_cluster_id                 = data.aws_eks_cluster.eks.name
-    eks_oidc_issuer_url            = local.eks_oidc_issuer_url
-    eks_oidc_provider_arn          = local.eks_oidc_provider_arn
-    irsa_iam_role_path             = "/"
-    irsa_iam_permissions_boundary  = null
-    tags = {
-      Project     = var.project
-      Environment = var.environment
-      Stack       = var.stack
-    }
+  adotcol_tags = {
+    Project     = var.project
+    Environment = var.environment
+    Stack       = var.stack
   }
 }
 
@@ -38,7 +26,7 @@ data "aws_eks_cluster" "eks" {
 resource "aws_cloudwatch_log_group" "adotcol" {
   name              = local.adotcol_cloudwatch_log_group_name
   retention_in_days = var.cloudwatch_log_group_retention_in_days
-  tags              = local.adot_addon_context.tags
+  tags              = local.adotcol_tags
 }
 
 # see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_stream
@@ -112,14 +100,14 @@ module "adotcol_irsa" {
   kubernetes_namespace              = local.adotcol_namespace
   create_kubernetes_service_account = true
   kubernetes_service_account        = local.adotcol_service_account_name
-  eks_cluster_id                    = local.adot_addon_context.eks_cluster_id
-  eks_oidc_provider_arn             = local.adot_addon_context.eks_oidc_provider_arn
+  eks_cluster_id                    = data.aws_eks_cluster.eks.name
+  eks_oidc_provider_arn             = local.eks_oidc_provider_arn
   irsa_iam_role_name                = local.adotcol_irsa_iam_role_name
   irsa_iam_policies = [
     # logs.
     aws_iam_policy.adotcol.arn,
   ]
-  tags = local.adot_addon_context.tags
+  tags = local.adotcol_tags
 }
 
 # see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy

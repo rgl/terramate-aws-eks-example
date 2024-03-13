@@ -52,9 +52,9 @@ module "eks" {
       force_update_version = true
       release_version      = nonsensitive(data.aws_ssm_parameter.eks_ami_release_version.value)
 
-      min_size     = 3
-      max_size     = 6
-      desired_size = 3
+      desired_size = 1
+      min_size     = 1
+      max_size     = 3
 
       update_config = {
         max_unavailable_percentage = 50

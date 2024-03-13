@@ -1,21 +1,6 @@
 locals {
-  adot_addon_context = {
-    aws_caller_identity_account_id = data.aws_caller_identity.current.account_id
-    aws_caller_identity_arn        = data.aws_caller_identity.current.arn
-    aws_partition_id               = data.aws_partition.current.partition
-    aws_region_name                = var.region
-    aws_eks_cluster_endpoint       = data.aws_eks_cluster.eks.endpoint
-    eks_cluster_id                 = data.aws_eks_cluster.eks.name
-    eks_oidc_issuer_url            = data.aws_eks_cluster.eks.identity[0].oidc[0].issuer
-    eks_oidc_provider_arn          = "arn:${data.aws_partition.current.partition}:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${replace(data.aws_eks_cluster.eks.identity[0].oidc[0].issuer, "https://", "")}"
-    irsa_iam_role_path             = "/"
-    irsa_iam_permissions_boundary  = null
-    tags = {
-      Project     = var.project
-      Environment = var.environment
-      Stack       = var.stack
-    }
-  }
+  eks_oidc_issuer_url   = data.aws_eks_cluster.eks.identity[0].oidc[0].issuer
+  eks_oidc_provider_arn = "arn:${data.aws_partition.current.partition}:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${replace(local.eks_oidc_issuer_url, "https://", "")}"
 }
 
 data "aws_caller_identity" "current" {}
@@ -26,14 +11,31 @@ data "aws_eks_cluster" "eks" {
   name = var.cluster_name
 }
 
-# see https://github.com/aws-observability/terraform-aws-observability-accelerator/tree/v2.12.1/modules/eks-monitoring/add-ons/adot-operator
-# see https://github.com/aws-ia/terraform-aws-eks-blueprints/tree/v4.32.1/modules/kubernetes-addons/cert-manager
 # see https://github.com/open-telemetry/opentelemetry-operator
 # see https://github.com/open-telemetry/opentelemetry-collector
 # see https://github.com/aws-observability/terraform-aws-observability-accelerator/issues/247
+# see https://github.com/aws-ia/terraform-aws-eks-blueprints-addons/releases/tag/v1.16.0
+# see https://github.com/aws-ia/terraform-aws-eks-blueprints-addons
 module "adot_operator" {
-  source              = "github.com/aws-observability/terraform-aws-observability-accelerator//modules/eks-monitoring/add-ons/adot-operator?ref=v2.12.1"
-  kubernetes_version  = data.aws_eks_cluster.eks.version
+  source  = "aws-ia/eks-blueprints-addons/aws"
+  version = "1.16.0"
+
+  cluster_name      = data.aws_eks_cluster.eks.name
+  cluster_endpoint  = data.aws_eks_cluster.eks.endpoint
+  cluster_version   = var.cluster_version
+  oidc_provider_arn = local.eks_oidc_provider_arn
+
   enable_cert_manager = true
-  addon_context       = local.adot_addon_context
+
+  cert_manager = {
+    role_name            = "${data.aws_eks_cluster.eks.name}-cert-manager-irsa"
+    role_name_use_prefix = false
+    wait                 = true
+  }
+
+  eks_addons = {
+    adot = {
+      most_recent = true
+    }
+  }
 }

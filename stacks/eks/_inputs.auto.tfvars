@@ -2,6 +2,7 @@
 
 cluster_cloudwatch_log_group_retention_in_days = 90
 cluster_name                                   = "aws-eks-example-dev"
+cluster_version                                = "1.29"
 environment                                    = "dev"
 project                                        = "aws-eks-example"
 region                                         = "eu-west-1"

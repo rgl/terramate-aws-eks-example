@@ -30,3 +30,13 @@ variable "cluster_name" {
   type        = string
   description = "EKS cluster name"
 }
+
+variable "cluster_version" {
+  type        = string
+  description = "EKS cluster version. See https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html."
+  default     = "1.29"
+  validation {
+    condition     = can(regex("^[0-9]+\\.[0-9]+$", var.cluster_version))
+    error_message = "Invalid version. Please provide a MAJOR.MINOR version."
+  }
+}

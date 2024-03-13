@@ -4,6 +4,8 @@ globals {
 
   cluster_name = "${global.project}-${global.environment}"
 
+  cluster_version = "1.29"
+
   cluster_cloudwatch_log_group_retention_in_days = 90
 
   # get the available regions with:

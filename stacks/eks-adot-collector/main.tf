@@ -41,6 +41,7 @@ resource "aws_cloudwatch_log_stream" "adotcol" {
 #    see https://github.com/aws-ia/terraform-aws-eks-blueprints/tree/v4.32.1/modules/kubernetes-addons/helm-addon
 #    see https://github.com/aws-observability/terraform-aws-observability-accelerator/blob/v2.12.1/modules/eks-monitoring/main.tf#L81-L228
 # see https://github.com/open-telemetry/opentelemetry-collector
+# see https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/manifest
 resource "kubernetes_manifest" "adotcol" {
   manifest = {
     apiVersion = "opentelemetry.io/v1alpha1"
@@ -93,21 +94,38 @@ resource "kubernetes_manifest" "adotcol" {
   }
 }
 
-# see https://github.com/aws-ia/terraform-aws-eks-blueprints/tree/v4.32.1/modules/irsa
+# see https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service_account_v1
+resource "kubernetes_service_account_v1" "adotcol" {
+  metadata {
+    namespace = local.adotcol_namespace
+    name      = local.adotcol_service_account_name
+    annotations = {
+      "eks.amazonaws.com/role-arn" = module.adotcol_irsa.iam_role_arn
+    }
+  }
+}
+
+# see https://github.com/aws-ia/terraform-aws-eks-blueprints-addon/releases/tag/v1.1.1
+# see https://github.com/aws-ia/terraform-aws-eks-blueprints-addon
 module "adotcol_irsa" {
-  source                            = "github.com/aws-ia/terraform-aws-eks-blueprints//modules/irsa?ref=v4.32.1"
-  create_kubernetes_namespace       = false
-  kubernetes_namespace              = local.adotcol_namespace
-  create_kubernetes_service_account = true
-  kubernetes_service_account        = local.adotcol_service_account_name
-  eks_cluster_id                    = data.aws_eks_cluster.eks.name
-  eks_oidc_provider_arn             = local.eks_oidc_provider_arn
-  irsa_iam_role_name                = local.adotcol_irsa_iam_role_name
-  irsa_iam_policies = [
-    # logs.
-    aws_iam_policy.adotcol.arn,
-  ]
-  tags = local.adotcol_tags
+  source  = "aws-ia/eks-blueprints-addon/aws"
+  version = "1.1.1"
+
+  create_release       = false
+  create_policy        = false
+  create_role          = true
+  role_name            = local.adotcol_irsa_iam_role_name
+  role_name_use_prefix = false
+  role_policies = {
+    Logs = aws_iam_policy.adotcol.arn
+  }
+  oidc_providers = {
+    this = {
+      provider_arn    = local.eks_oidc_provider_arn
+      namespace       = local.adotcol_namespace
+      service_account = local.adotcol_service_account_name
+    }
+  }
 }
 
 # see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy

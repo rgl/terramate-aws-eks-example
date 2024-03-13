@@ -70,14 +70,14 @@ globals "terraform" "providers" "helm" {
 # see https://github.com/hashicorp/terraform-provider-local
 globals "terraform" "providers" "local" {
   # renovate: datasource=terraform-provider depName=hashicorp/local
-  version = "2.4.1"
+  version = "2.5.1"
 }
 
 # see https://registry.terraform.io/providers/hashicorp/time
 # see https://github.com/hashicorp/terraform-provider-time
 globals "terraform" "providers" "time" {
   # renovate: datasource=terraform-provider depName=hashicorp/time
-  version = "0.10.0"
+  version = "0.11.1"
 }
 
 # see https://registry.terraform.io/providers/hashicorp/tls

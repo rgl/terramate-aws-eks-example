@@ -1,9 +1,10 @@
 // TERRAMATE: GENERATED AUTOMATICALLY DO NOT EDIT
 
-cluster_name = "aws-eks-example-dev"
-environment  = "dev"
-project      = "aws-eks-example"
-region       = "eu-west-1"
+cluster_name   = "aws-eks-example-dev"
+environment    = "dev"
+ingress_domain = "example.test"
+project        = "aws-eks-example"
+region         = "eu-west-1"
 source_images = {
   kubernetes-hello = {
     name = "docker.io/ruilopes/kubernetes-hello"

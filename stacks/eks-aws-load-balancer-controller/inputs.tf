@@ -29,24 +29,14 @@ variable "environment" {
 variable "cluster_name" {
   type        = string
   description = "EKS cluster name"
-  validation {
-    condition     = can(regex("^[a-z][a-z0-9-]+$", var.cluster_name))
-    error_message = "Invalid cluster name."
-  }
 }
 
-variable "ingress_domain" {
+variable "cluster_version" {
   type        = string
-  description = "The DNS domain name used to fully quality the ingress objects"
+  description = "EKS cluster version. See https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html."
+  default     = "1.29"
   validation {
-    condition     = can(regex("^[a-z][a-z0-9-]+(\\.[a-z][a-z0-9-]+)+$", var.ingress_domain))
-    error_message = "Invalid ingress domain."
+    condition     = can(regex("^[0-9]+\\.[0-9]+$", var.cluster_version))
+    error_message = "Invalid version. Please provide a MAJOR.MINOR version."
   }
-}
-
-variable "source_images" {
-  type = map(object({
-    name = string
-    tag  = string
-  }))
 }

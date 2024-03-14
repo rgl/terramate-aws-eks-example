@@ -1,3 +1,36 @@
+# see https://kubernetes.io/docs/concepts/services-networking/ingress/
+# see https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#ingress-v1-networking-k8s-io
+# see https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.7/guide/ingress/annotations/
+# see https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/ingress_v1
+resource "kubernetes_ingress_v1" "otel_example" {
+  metadata {
+    name = "otel-example"
+    annotations = {
+      "alb.ingress.kubernetes.io/scheme"      = "internet-facing"
+      "alb.ingress.kubernetes.io/target-type" = "ip"
+    }
+  }
+  spec {
+    rule {
+      host = "otel-example.${var.ingress_domain}"
+      http {
+        path {
+          path      = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "otel-example"
+              port {
+                name = "web"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 # see https://kubernetes.io/docs/concepts/services-networking/service/#clusterip
 # see https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#service-v1-core
 # see https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#serviceport-v1-core
@@ -7,7 +40,7 @@ resource "kubernetes_service_v1" "otel_example" {
     name = "otel-example"
   }
   spec {
-    type = "LoadBalancer"
+    type = "ClusterIP"
     selector = {
       app = "otel-example"
     }

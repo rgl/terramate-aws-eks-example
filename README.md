@@ -21,16 +21,16 @@ This will:
   * Show the containers running inside its pod.
   * Show its memory limits.
   * Show its cgroups.
-  * Expose as a Kubernetes `LoadBalancer` `Service`.
-    * Note that this results in the creation of an [EC2 Classic Load Balancer (CLB)](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/introduction.html).
+  * Expose as a Kubernetes `Ingress`.
+    * Note that this results in the creation of an [EC2 Application Load Balancer (ALB)](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html).
   * Use [Role and RoleBinding](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
   * Use [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/).
   * Use [Secret](https://kubernetes.io/docs/concepts/configuration/secret/).
   * Use [ServiceAccount](https://kubernetes.io/docs/concepts/security/service-accounts/).
   * Use [Service Account token volume projection (a JSON Web Token and OpenID Connect (OIDC) ID Token)](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#serviceaccount-token-volume-projection) for the `https://example.com` audience.
 * Demonstrate how to automatically deploy the [`otel-example` workload](stacks/eks-workloads/otel-example.tf).
-  * Expose as a Kubernetes `LoadBalancer` `Service`.
-    * Note that this results in the creation of an [EC2 Classic Load Balancer (CLB)](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/introduction.html).
+  * Expose as a Kubernetes `Ingress` `Service`.
+    * Note that this results in the creation of an [EC2 Application Load Balancer (ALB)](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html).
   * Send OpenTelemetry telemetry signals to the [`adot-collector` service](stacks/eks/adot-collector/main.tf).
     * Send the logs telemetry signal to the Amazon CloudWatch Logs service.
 
@@ -159,7 +159,7 @@ Show the `adot` OpenTelemetryCollector instance:
 kubectl get -n opentelemetry-operator-system opentelemetrycollector/adot -o yaml
 ```
 
-Access the `otel-example` service from a [kubectl port-forward local port](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/):
+Access the `otel-example` ClusterIP Service from a [kubectl port-forward local port](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/):
 
 ```bash
 kubectl port-forward service/otel-example 6789:80 &
@@ -168,19 +168,21 @@ wget -qO- http://localhost:6789/quote | jq
 kill %1 && sleep 3
 ```
 
-Access the `otel-example` service from the Internet:
+Access the `otel-example` Ingress from the Internet:
 
 ```bash
-otel_example_domain="$(kubectl get service/otel-example -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')"
-otel_example_url="http://$otel_example_domain"
-echo "otel-example service url: $otel_example_url"
-# wait for the domain to resolve.
-while [ -z "$(dig +short "$otel_example_domain")" ]; do sleep 5; done && dig "$otel_example_domain"
+otel_example_address="$(kubectl get ingress/otel-example -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')"
+otel_example_host="$(kubectl get ingress/otel-example -o jsonpath='{.spec.rules[0].host}')"
+otel_example_url="http://$otel_example_address"
+echo "otel-example ingress address: $otel_example_address"
+echo "otel-example ingress host: $otel_example_host"
+# wait for the address to resolve.
+while [ -z "$(dig +short "$otel_example_address")" ]; do sleep 5; done && dig "$otel_example_address"
 # finally, access the service.
-wget -qO- "$otel_example_url/quote" | jq
+wget -qO- --header "Host:$otel_example_host" "$otel_example_url/quote" | jq
 ```
 
-Access the `kubernetes-hello` service from a [kubectl port-forward local port](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/):
+Access the `kubernetes-hello` ClusterIP Service from a [kubectl port-forward local port](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/):
 
 ```bash
 kubectl port-forward service/kubernetes-hello 6789:80 &
@@ -189,16 +191,18 @@ wget -qO- http://localhost:6789
 kill %1 && sleep 3
 ```
 
-Access the `kubernetes-hello` service from the Internet:
+Access the `kubernetes-hello` Ingress from the Internet:
 
 ```bash
-kubernetes_hello_domain="$(kubectl get service/kubernetes-hello -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')"
-kubernetes_hello_url="http://$kubernetes_hello_domain"
-echo "kubernetes-hello service url: $kubernetes_hello_url"
-# wait for the domain to resolve.
-while [ -z "$(dig +short "$kubernetes_hello_domain")" ]; do sleep 5; done && dig "$kubernetes_hello_domain"
+kubernetes_hello_address="$(kubectl get ingress/kubernetes-hello -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')"
+kubernetes_hello_host="$(kubectl get ingress/kubernetes-hello -o jsonpath='{.spec.rules[0].host}')"
+kubernetes_hello_url="http://$kubernetes_hello_address"
+echo "kubernetes-hello ingress domain: $kubernetes_hello_address"
+echo "kubernetes-hello ingress host: $kubernetes_hello_host"
+# wait for the address to resolve.
+while [ -z "$(dig +short "$kubernetes_hello_address")" ]; do sleep 5; done && dig "$kubernetes_hello_address"
 # finally, access the service.
-wget -qO- "$kubernetes_hello_url"
+wget -qO- --header "Host:$kubernetes_hello_host" "$kubernetes_hello_url"
 ```
 
 Log in the container registry:
@@ -352,3 +356,6 @@ GITHUB_COM_TOKEN='YOUR_GITHUB_PERSONAL_TOKEN' ./renovate.sh
     * [aws-samples/eks-workshop-v2 example repository](https://github.com/aws-samples/eks-workshop-v2/tree/main/cluster/terraform)
 * [Official Amazon EKS AMI awslabs/amazon-eks-ami repository](https://github.com/awslabs/amazon-eks-ami)
 * [terramate-quickstart-aws](https://github.com/terramate-io/terramate-quickstart-aws)
+* [aws-ia/terraform-aws-eks-blueprints](https://github.com/aws-ia/terraform-aws-eks-blueprints)
+* [aws-ia/terraform-aws-eks-blueprints-addons](https://github.com/aws-ia/terraform-aws-eks-blueprints-addons)
+* [aws-ia/terraform-aws-eks-blueprints-addon](https://github.com/aws-ia/terraform-aws-eks-blueprints-addon)

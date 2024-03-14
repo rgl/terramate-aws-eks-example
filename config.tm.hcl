@@ -8,6 +8,8 @@ globals {
 
   cluster_cloudwatch_log_group_retention_in_days = 90
 
+  ingress_domain = "example.test"
+
   # get the available regions with:
   #   aws ec2 describe-regions | jq -r '.Regions[].RegionName' | sort
   region = "eu-west-1"

@@ -88,6 +88,39 @@ resource "kubernetes_config_map_v1" "kubernetes_hello" {
   }
 }
 
+# see https://kubernetes.io/docs/concepts/services-networking/ingress/
+# see https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#ingress-v1-networking-k8s-io
+# see https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.7/guide/ingress/annotations/
+# see https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/ingress_v1
+resource "kubernetes_ingress_v1" "kubernetes_hello" {
+  metadata {
+    name = "kubernetes-hello"
+    annotations = {
+      "alb.ingress.kubernetes.io/scheme"      = "internet-facing"
+      "alb.ingress.kubernetes.io/target-type" = "ip"
+    }
+  }
+  spec {
+    rule {
+      host = "kubernetes-hello.${var.ingress_domain}"
+      http {
+        path {
+          path      = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "kubernetes-hello"
+              port {
+                name = "web"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 # see https://kubernetes.io/docs/concepts/services-networking/service/
 # see https://kubernetes.io/docs/concepts/services-networking/service/#clusterip
 # see https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#service-v1-core
@@ -98,7 +131,7 @@ resource "kubernetes_service_v1" "kubernetes_hello" {
     name = "kubernetes-hello"
   }
   spec {
-    type = "LoadBalancer"
+    type = "ClusterIP"
     selector = {
       app = "kubernetes-hello"
     }

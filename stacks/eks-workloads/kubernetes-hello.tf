@@ -98,6 +98,7 @@ resource "kubernetes_ingress_v1" "kubernetes_hello" {
     annotations = {
       "alb.ingress.kubernetes.io/scheme"      = "internet-facing"
       "alb.ingress.kubernetes.io/target-type" = "ip"
+      "alb.ingress.kubernetes.io/group.name"  = var.ingress_domain
     }
   }
   spec {

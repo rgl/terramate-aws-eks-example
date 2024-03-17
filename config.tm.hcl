@@ -22,7 +22,7 @@ globals {
     otel-example = {
       name = "ghcr.io/rgl/opentelemetry-dotnet-playground"
       # renovate: datasource=docker depName=rgl/opentelemetry-dotnet-playground registryUrl=https://ghcr.io
-      tag = "0.0.4"
+      tag = "0.0.6"
     }
     kubernetes-hello = {
       # see https://hub.docker.com/repository/docker/ruilopes/kubernetes-hello

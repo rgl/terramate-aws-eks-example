@@ -8,7 +8,7 @@ images = {
   }
   otel-example = {
     name = "ghcr.io/rgl/opentelemetry-dotnet-playground"
-    tag  = "0.0.4"
+    tag  = "0.0.6"
   }
 }
 project              = "aws-eks-example"

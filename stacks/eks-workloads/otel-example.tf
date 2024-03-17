@@ -52,12 +52,13 @@ resource "kubernetes_ingress_v1" "otel_example" {
   metadata {
     name = "otel-example"
     annotations = {
-      "alb.ingress.kubernetes.io/scheme"       = "internet-facing"
-      "alb.ingress.kubernetes.io/target-type"  = "ip"
-      "alb.ingress.kubernetes.io/group.name"   = var.ingress_domain
-      "alb.ingress.kubernetes.io/listen-ports" = "[{\"HTTP\":80},{\"HTTPS\":443}]"
-      "alb.ingress.kubernetes.io/ssl-redirect" = "443"
-      "alb.ingress.kubernetes.io/ssl-policy"   = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+      "alb.ingress.kubernetes.io/scheme"           = "internet-facing"
+      "alb.ingress.kubernetes.io/target-type"      = "ip"
+      "alb.ingress.kubernetes.io/group.name"       = var.ingress_domain
+      "alb.ingress.kubernetes.io/listen-ports"     = "[{\"HTTP\":80},{\"HTTPS\":443}]"
+      "alb.ingress.kubernetes.io/ssl-redirect"     = "443"
+      "alb.ingress.kubernetes.io/ssl-policy"       = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+      "alb.ingress.kubernetes.io/healthcheck-path" = "/healthz/ready"
     }
   }
   spec {
@@ -107,6 +108,8 @@ resource "kubernetes_service_v1" "otel_example" {
 # see https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#deployment-v1-apps
 # see https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#podtemplatespec-v1-core
 # see https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#container-v1-core
+# see https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#probe-v1-core
+# see https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#httpgetaction-v1-core
 # see https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/deployment_v1
 resource "kubernetes_deployment_v1" "otel_example" {
   metadata {
@@ -148,6 +151,12 @@ resource "kubernetes_deployment_v1" "otel_example" {
           port {
             name           = "web"
             container_port = 8000
+          }
+          readiness_probe {
+            http_get {
+              path = "/healthz/ready"
+              port = "web"
+            }
           }
           resources {
             requests = {

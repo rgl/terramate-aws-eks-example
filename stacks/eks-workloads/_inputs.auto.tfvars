@@ -12,7 +12,7 @@ source_images = {
   }
   otel-example = {
     name = "ghcr.io/rgl/opentelemetry-dotnet-playground"
-    tag  = "0.0.4"
+    tag  = "0.0.6"
   }
 }
 stack = "03b490d2-21d2-4bff-bbea-77ee2f74de35"

@@ -5,7 +5,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>960</x>
-      <y>550</y>
+      <y>160</y>
       <w>860</w>
       <h>870</h>
     </coordinates>
@@ -19,7 +19,7 @@ lt=..</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>690</x>
-      <y>500</y>
+      <y>110</y>
       <w>1740</w>
       <h>1100</h>
     </coordinates>
@@ -31,7 +31,7 @@ lt=..</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>980</x>
-      <y>620</y>
+      <y>230</y>
       <w>820</w>
       <h>120</h>
     </coordinates>
@@ -44,7 +44,7 @@ lt=..</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>980</x>
-      <y>760</y>
+      <y>370</y>
       <w>820</w>
       <h>640</h>
     </coordinates>
@@ -56,7 +56,7 @@ lt=..</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>0</x>
-      <y>670</y>
+      <y>280</y>
       <w>1020</w>
       <h>40</h>
     </coordinates>
@@ -69,7 +69,7 @@ r1=https://&lt;id&gt;.eu-west-1.eks.amazonaws.com
     <id>UMLClass</id>
     <coordinates>
       <x>1000</x>
-      <y>670</y>
+      <y>280</y>
       <w>100</w>
       <h>50</h>
     </coordinates>
@@ -81,7 +81,7 @@ api-server</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>670</x>
-      <y>460</y>
+      <y>70</y>
       <w>1780</w>
       <h>1160</h>
     </coordinates>
@@ -93,7 +93,7 @@ lt=..</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1070</x>
-      <y>1110</y>
+      <y>720</y>
       <w>100</w>
       <h>50</h>
     </coordinates>
@@ -105,11 +105,12 @@ otel-example</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>710</x>
-      <y>1040</y>
+      <y>650</y>
       <w>230</w>
-      <h>70</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes>&lt;&lt;l7 load balancer&gt;&gt;
+&lt;&lt;tls termination&gt;&gt;
 &lt;&lt;external lb&gt;&gt;
 &lt;&lt;aplication load balancer&gt;&gt;
 </panel_attributes>
@@ -119,19 +120,19 @@ otel-example</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>0</x>
-      <y>1040</y>
+      <y>650</y>
       <w>730</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=()-
-r1=http://otel-example.example.test</panel_attributes>
+r1=https://otel-example.example.test</panel_attributes>
     <additional_attributes>10.0;20.0;710.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>930</x>
-      <y>1040</y>
+      <y>650</y>
       <w>280</w>
       <h>50</h>
     </coordinates>
@@ -142,7 +143,7 @@ r1=http://otel-example.example.test</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1230</x>
-      <y>990</y>
+      <y>600</y>
       <w>150</w>
       <h>230</h>
     </coordinates>
@@ -154,7 +155,7 @@ otel-example</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1190</x>
-      <y>1050</y>
+      <y>660</y>
       <w>80</w>
       <h>30</h>
     </coordinates>
@@ -165,7 +166,7 @@ otel-example</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>640</x>
-      <y>390</y>
+      <y>0</y>
       <w>30</w>
       <h>1280</h>
     </coordinates>
@@ -177,7 +178,7 @@ group=group-0</panel_attributes>
     <id>Text</id>
     <coordinates>
       <x>660</x>
-      <y>410</y>
+      <y>20</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -190,7 +191,7 @@ group=group-0</panel_attributes>
     <id>Text</id>
     <coordinates>
       <x>440</x>
-      <y>410</y>
+      <y>20</y>
       <w>210</w>
       <h>40</h>
     </coordinates>
@@ -203,7 +204,7 @@ group=group-0</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1250</x>
-      <y>1040</y>
+      <y>650</y>
       <w>110</w>
       <h>160</h>
     </coordinates>
@@ -215,7 +216,7 @@ otel-example</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>2010</x>
-      <y>760</y>
+      <y>370</y>
       <w>380</w>
       <h>230</h>
     </coordinates>
@@ -228,7 +229,7 @@ CloudWatch Logs</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1790</x>
-      <y>710</y>
+      <y>320</y>
       <w>220</w>
       <h>170</h>
     </coordinates>
@@ -240,7 +241,7 @@ r2=&lt;&lt;push&gt;&gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1750</x>
-      <y>920</y>
+      <y>530</y>
       <w>260</w>
       <h>200</h>
     </coordinates>
@@ -253,7 +254,7 @@ r2=&lt;&lt;push&gt;&gt;
     <id>UMLClass</id>
     <coordinates>
       <x>1610</x>
-      <y>1080</y>
+      <y>690</y>
       <w>150</w>
       <h>50</h>
     </coordinates>
@@ -266,7 +267,7 @@ adot-collector
     <id>Relation</id>
     <coordinates>
       <x>1430</x>
-      <y>1080</y>
+      <y>690</y>
       <w>70</w>
       <h>40</h>
     </coordinates>
@@ -278,7 +279,7 @@ adot-collector
     <id>Relation</id>
     <coordinates>
       <x>1350</x>
-      <y>1080</y>
+      <y>690</y>
       <w>100</w>
       <h>50</h>
     </coordinates>
@@ -289,7 +290,7 @@ adot-collector
     <id>UMLClass</id>
     <coordinates>
       <x>1650</x>
-      <y>1440</y>
+      <y>1050</y>
       <w>170</w>
       <h>140</h>
     </coordinates>
@@ -302,7 +303,7 @@ container registry</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1680</x>
-      <y>1510</y>
+      <y>1120</y>
       <w>110</w>
       <h>50</h>
     </coordinates>
@@ -314,7 +315,7 @@ otel-example</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1330</x>
-      <y>1190</y>
+      <y>800</y>
       <w>340</w>
       <h>360</h>
     </coordinates>
@@ -326,7 +327,7 @@ r2=&lt;&lt;uses&gt;&gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1640</x>
-      <y>1520</y>
+      <y>1130</y>
       <w>60</w>
       <h>30</h>
     </coordinates>
@@ -337,7 +338,7 @@ r2=&lt;&lt;uses&gt;&gt;</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1990</x>
-      <y>690</y>
+      <y>300</y>
       <w>420</w>
       <h>320</h>
     </coordinates>
@@ -351,7 +352,7 @@ lt=..</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1610</x>
-      <y>1310</y>
+      <y>920</y>
       <w>150</w>
       <h>50</h>
     </coordinates>
@@ -363,7 +364,7 @@ cert-manager</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1480</x>
-      <y>1080</y>
+      <y>690</y>
       <w>110</w>
       <h>50</h>
     </coordinates>
@@ -375,7 +376,7 @@ adot-collector</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1580</x>
-      <y>1080</y>
+      <y>690</y>
       <w>50</w>
       <h>40</h>
     </coordinates>
@@ -387,7 +388,7 @@ adot-collector</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1610</x>
-      <y>990</y>
+      <y>600</y>
       <w>150</w>
       <h>50</h>
     </coordinates>
@@ -400,7 +401,7 @@ adot-operator
     <id>Relation</id>
     <coordinates>
       <x>1650</x>
-      <y>1030</y>
+      <y>640</y>
       <w>110</w>
       <h>70</h>
     </coordinates>
@@ -412,7 +413,7 @@ adot-operator
     <id>UMLClass</id>
     <coordinates>
       <x>1460</x>
-      <y>940</y>
+      <y>550</y>
       <w>320</w>
       <h>300</h>
     </coordinates>
@@ -425,7 +426,7 @@ lt=..</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1000</x>
-      <y>940</y>
+      <y>550</y>
       <w>400</w>
       <h>300</h>
     </coordinates>
@@ -438,7 +439,7 @@ lt=..</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1610</x>
-      <y>1170</y>
+      <y>780</y>
       <w>150</w>
       <h>50</h>
     </coordinates>
@@ -451,7 +452,7 @@ adot-collector
     <id>UMLClass</id>
     <coordinates>
       <x>1990</x>
-      <y>1170</y>
+      <y>780</y>
       <w>320</w>
       <h>50</h>
     </coordinates>
@@ -464,7 +465,7 @@ aws-eks-example-dev-adot-collector-irsa
     <id>Relation</id>
     <coordinates>
       <x>1650</x>
-      <y>1120</y>
+      <y>730</y>
       <w>30</w>
       <h>70</h>
     </coordinates>
@@ -475,7 +476,7 @@ aws-eks-example-dev-adot-collector-irsa
     <id>Relation</id>
     <coordinates>
       <x>1750</x>
-      <y>1170</y>
+      <y>780</y>
       <w>260</w>
       <h>40</h>
     </coordinates>
@@ -487,7 +488,7 @@ lt=-&gt;</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>2090</x>
-      <y>1230</y>
+      <y>840</y>
       <w>320</w>
       <h>50</h>
     </coordinates>
@@ -500,7 +501,7 @@ aws-eks-example-dev-adot-collector-irsa
     <id>Relation</id>
     <coordinates>
       <x>2040</x>
-      <y>1210</y>
+      <y>820</y>
       <w>70</w>
       <h>60</h>
     </coordinates>
@@ -511,7 +512,7 @@ aws-eks-example-dev-adot-collector-irsa
     <id>UMLClass</id>
     <coordinates>
       <x>2030</x>
-      <y>830</y>
+      <y>440</y>
       <w>340</w>
       <h>60</h>
     </coordinates>
@@ -523,7 +524,7 @@ aws-eks-example-dev-adot-collector-irsa
     <id>Relation</id>
     <coordinates>
       <x>1980</x>
-      <y>850</y>
+      <y>460</y>
       <w>70</w>
       <h>30</h>
     </coordinates>
@@ -534,7 +535,7 @@ aws-eks-example-dev-adot-collector-irsa
     <id>UMLClass</id>
     <coordinates>
       <x>2030</x>
-      <y>910</y>
+      <y>520</y>
       <w>340</w>
       <h>60</h>
     </coordinates>
@@ -546,7 +547,7 @@ aws-eks-example-dev-adot-collector-irsa
     <id>Relation</id>
     <coordinates>
       <x>1980</x>
-      <y>930</y>
+      <y>540</y>
       <w>70</w>
       <h>30</h>
     </coordinates>
@@ -557,7 +558,7 @@ aws-eks-example-dev-adot-collector-irsa
     <id>UMLClass</id>
     <coordinates>
       <x>1660</x>
-      <y>670</y>
+      <y>280</y>
       <w>120</w>
       <h>50</h>
     </coordinates>
@@ -570,7 +571,7 @@ adot-operator
     <id>UMLClass</id>
     <coordinates>
       <x>1550</x>
-      <y>670</y>
+      <y>280</y>
       <w>90</w>
       <h>50</h>
     </coordinates>
@@ -583,7 +584,7 @@ vpc-cni
     <id>UMLClass</id>
     <coordinates>
       <x>1990</x>
-      <y>620</y>
+      <y>230</y>
       <w>320</w>
       <h>50</h>
     </coordinates>
@@ -596,7 +597,7 @@ eks/aws-eks-example-dev
     <id>UMLClass</id>
     <coordinates>
       <x>1990</x>
-      <y>1310</y>
+      <y>920</y>
       <w>320</w>
       <h>50</h>
     </coordinates>
@@ -609,7 +610,7 @@ aws-eks-example-dev-cert-manager-irsa
     <id>UMLClass</id>
     <coordinates>
       <x>2090</x>
-      <y>1370</y>
+      <y>980</y>
       <w>320</w>
       <h>50</h>
     </coordinates>
@@ -622,7 +623,7 @@ aws-eks-example-dev-cert-manager-irsa
     <id>UMLClass</id>
     <coordinates>
       <x>1990</x>
-      <y>550</y>
+      <y>160</y>
       <w>320</w>
       <h>50</h>
     </coordinates>
@@ -635,7 +636,7 @@ aws-eks-example-dev-cluster-&lt;id&gt;
     <id>Relation</id>
     <coordinates>
       <x>1810</x>
-      <y>550</y>
+      <y>160</y>
       <w>200</w>
       <h>40</h>
     </coordinates>
@@ -647,7 +648,7 @@ lt=-&gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1810</x>
-      <y>630</y>
+      <y>240</y>
       <w>200</w>
       <h>30</h>
     </coordinates>
@@ -658,7 +659,7 @@ lt=-&gt;</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1460</x>
-      <y>1260</y>
+      <y>870</y>
       <w>320</w>
       <h>120</h>
     </coordinates>
@@ -671,7 +672,7 @@ lt=..</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2040</x>
-      <y>1350</y>
+      <y>960</y>
       <w>70</w>
       <h>60</h>
     </coordinates>
@@ -682,7 +683,7 @@ lt=..</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1750</x>
-      <y>1310</y>
+      <y>920</y>
       <w>260</w>
       <h>40</h>
     </coordinates>
@@ -694,7 +695,7 @@ lt=-&gt;</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>710</x>
-      <y>550</y>
+      <y>160</y>
       <w>230</w>
       <h>50</h>
     </coordinates>
@@ -706,7 +707,7 @@ lt=-&gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>0</x>
-      <y>550</y>
+      <y>160</y>
       <w>730</w>
       <h>50</h>
     </coordinates>
@@ -720,7 +721,7 @@ m1=OpenID Connect Discovery Document
     <id>Relation</id>
     <coordinates>
       <x>930</x>
-      <y>560</y>
+      <y>170</y>
       <w>50</w>
       <h>30</h>
     </coordinates>
@@ -731,7 +732,7 @@ m1=OpenID Connect Discovery Document
     <id>Relation</id>
     <coordinates>
       <x>1160</x>
-      <y>1060</y>
+      <y>670</y>
       <w>70</w>
       <h>90</h>
     </coordinates>
@@ -742,7 +743,7 @@ m1=OpenID Connect Discovery Document
     <id>Relation</id>
     <coordinates>
       <x>1020</x>
-      <y>1120</y>
+      <y>730</y>
       <w>70</w>
       <h>30</h>
     </coordinates>
@@ -753,7 +754,7 @@ m1=OpenID Connect Discovery Document
     <id>UMLClass</id>
     <coordinates>
       <x>1000</x>
-      <y>1260</y>
+      <y>870</y>
       <w>280</w>
       <h>120</h>
     </coordinates>
@@ -766,7 +767,7 @@ lt=..</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1020</x>
-      <y>1310</y>
+      <y>920</y>
       <w>240</w>
       <h>50</h>
     </coordinates>
@@ -778,7 +779,7 @@ aws-load-balancer-controller</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1030</x>
-      <y>1350</y>
+      <y>960</y>
       <w>130</w>
       <h>130</h>
     </coordinates>
@@ -790,7 +791,7 @@ lt=-&gt;</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>860</x>
-      <y>1460</y>
+      <y>1070</y>
       <w>420</w>
       <h>50</h>
     </coordinates>
@@ -803,19 +804,19 @@ aws-eks-example-dev-aws-load-balancer-controller-irsa
     <id>Relation</id>
     <coordinates>
       <x>810</x>
-      <y>1100</y>
+      <y>720</y>
       <w>230</w>
-      <h>250</h>
+      <h>240</h>
     </coordinates>
     <panel_attributes>r2=&lt;&lt;manage&gt;&gt;
 lt=-&gt;</panel_attributes>
-    <additional_attributes>210.0;230.0;20.0;230.0;10.0;220.0;10.0;10.0</additional_attributes>
+    <additional_attributes>210.0;220.0;20.0;220.0;10.0;210.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>1070</x>
-      <y>1150</y>
+      <y>760</y>
       <w>90</w>
       <h>180</h>
     </coordinates>
@@ -827,7 +828,7 @@ lt=&lt;-</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>710</x>
-      <y>760</y>
+      <y>370</y>
       <w>230</w>
       <h>50</h>
     </coordinates>
@@ -840,7 +841,7 @@ example.test
     <id>Relation</id>
     <coordinates>
       <x>0</x>
-      <y>760</y>
+      <y>370</y>
       <w>730</w>
       <h>40</h>
     </coordinates>
@@ -853,7 +854,7 @@ r1=dns
     <id>UMLClass</id>
     <coordinates>
       <x>1000</x>
-      <y>800</y>
+      <y>410</y>
       <w>280</w>
       <h>120</h>
     </coordinates>
@@ -866,7 +867,7 @@ lt=..</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1020</x>
-      <y>850</y>
+      <y>460</y>
       <w>240</w>
       <h>50</h>
     </coordinates>
@@ -878,7 +879,7 @@ external-dns</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1070</x>
-      <y>890</y>
+      <y>500</y>
       <w>90</w>
       <h>240</h>
     </coordinates>
@@ -890,7 +891,7 @@ lt=-&gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>810</x>
-      <y>800</y>
+      <y>410</y>
       <w>230</w>
       <h>90</h>
     </coordinates>
@@ -902,8 +903,8 @@ lt=-&gt;</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>710</x>
-      <y>940</y>
-      <w>240</w>
+      <y>550</y>
+      <w>230</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>&lt;&lt;iam role&gt;&gt;
@@ -915,7 +916,7 @@ external-dns-&lt;id&gt;
     <id>Relation</id>
     <coordinates>
       <x>810</x>
-      <y>860</y>
+      <y>470</y>
       <w>230</w>
       <h>100</h>
     </coordinates>

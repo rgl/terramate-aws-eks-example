@@ -1,5 +1,12 @@
+# see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity
 data "aws_caller_identity" "current" {}
 
+# see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone
+data "aws_route53_zone" "ingress" {
+  name = var.ingress_domain
+}
+
+# see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster
 data "aws_eks_cluster" "eks" {
   name = var.cluster_name
 }

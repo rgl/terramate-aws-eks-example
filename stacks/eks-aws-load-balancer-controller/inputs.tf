@@ -40,3 +40,12 @@ variable "cluster_version" {
     error_message = "Invalid version. Please provide a MAJOR.MINOR version."
   }
 }
+
+variable "ingress_domain" {
+  type        = string
+  description = "The DNS domain name used to fully qualify the ingress objects domain"
+  validation {
+    condition     = can(regex("^[a-z][a-z0-9-]+(\\.[a-z][a-z0-9-]+)+$", var.ingress_domain))
+    error_message = "Invalid ingress domain."
+  }
+}

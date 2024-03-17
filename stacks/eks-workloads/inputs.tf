@@ -37,7 +37,7 @@ variable "cluster_name" {
 
 variable "ingress_domain" {
   type        = string
-  description = "The DNS domain name used to fully quality the ingress objects"
+  description = "The DNS domain name used to fully qualify the ingress objects domain"
   validation {
     condition     = can(regex("^[a-z][a-z0-9-]+(\\.[a-z][a-z0-9-]+)+$", var.ingress_domain))
     error_message = "Invalid ingress domain."

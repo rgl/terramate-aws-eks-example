@@ -14,6 +14,9 @@ This will:
 * Create the Elastic Container Registry (ECR) repositories declared on the
   [`source_images` global variable](config.tm.hcl), and upload the corresponding container
   images.
+* Create a public DNS Zone using [Amazon Route 53](https://aws.amazon.com/route53/).
+  * Note that you need to configure the parent DNS Zone to delegate to this DNS Zone name servers.
+  * Use [external-dns](https://github.com/kubernetes-sigs/external-dns) to create the Ingress DNS Resource Records in the DNS Zone.
 * Demonstrate how to automatically deploy the [`kubernetes-hello` workload](stacks/eks-workloads/kubernetes-hello.tf).
   * Show its environment variables.
   * Show its tokens, secrets, and configs (config maps).
@@ -22,6 +25,7 @@ This will:
   * Show its memory limits.
   * Show its cgroups.
   * Expose as a Kubernetes `Ingress`.
+    * Use a sub-domain in the DNS Zone.
     * Note that this results in the creation of an [EC2 Application Load Balancer (ALB)](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html).
   * Use [Role and RoleBinding](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
   * Use [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/).
@@ -30,6 +34,7 @@ This will:
   * Use [Service Account token volume projection (a JSON Web Token and OpenID Connect (OIDC) ID Token)](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#serviceaccount-token-volume-projection) for the `https://example.com` audience.
 * Demonstrate how to automatically deploy the [`otel-example` workload](stacks/eks-workloads/otel-example.tf).
   * Expose as a Kubernetes `Ingress` `Service`.
+    * Use a sub-domain in the DNS Zone.
     * Note that this results in the creation of an [EC2 Application Load Balancer (ALB)](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html).
   * Send OpenTelemetry telemetry signals to the [`adot-collector` service](stacks/eks/adot-collector/main.tf).
     * Send the logs telemetry signal to the Amazon CloudWatch Logs service.
@@ -109,6 +114,38 @@ terramate run terraform state list
 terramate run terraform show
 ```
 
+Show the ingress domain and the ingress DNS Zone name servers:
+
+```bash
+ingress_domain="$(terramate run -C stacks/eks-aws-load-balancer-controller \
+  terraform output -raw ingress_domain)"
+ingress_domain_name_servers="$(terramate run -C stacks/eks-aws-load-balancer-controller \
+  terraform output -json ingress_domain_name_servers \
+  | jq -r '.[]')"
+printf "ingress_domain:\n\n$ingress_domain\n\n"
+printf "ingress_domain_name_servers:\n\n$ingress_domain_name_servers\n\n"
+```
+
+Using your parent ingress domain DNS Registrar or DNS Hosting provider, delegate the `ingress_domain` DNS Zone to the returned `ingress_domain_name_servers` DNS name servers. For example, at the parent DNS Zone, add:
+
+```plain
+example NS ns-123.awsdns-11.com.
+example NS ns-321.awsdns-34.net.
+example NS ns-456.awsdns-56.org.
+example NS ns-948.awsdns-65.co.uk.
+```
+
+Verify the delegation:
+
+```bash
+ingress_domain="$(terramate run -C stacks/eks-aws-load-balancer-controller \
+  terraform output -raw ingress_domain)"
+ingress_domain_name_server="$(terramate run -C stacks/eks-aws-load-balancer-controller \
+  terraform output -json ingress_domain_name_servers | jq -r '.[0]')"
+dig ns "$ingress_domain" "@$ingress_domain_name_server" # verify with amazon route 53 dns.
+dig ns "$ingress_domain"                                # verify with your local resolver.
+```
+
 Show the [OpenID Connect Discovery Document](https://openid.net/specs/openid-connect-discovery-1_0.html) (aka OpenID Connect Configuration):
 
 ```bash
@@ -147,10 +184,14 @@ List the installed Helm chart releases:
 helm list --all-namespaces
 ```
 
-Show the rendered `cert-manager` Helm chart:
+Show a helm release status, the user supplied values, all the values, and the
+chart managed kubernetes resources:
 
 ```bash
-helm get -n cert-manager manifest cert-manager
+helm -n external-dns status external-dns
+helm -n external-dns get values external-dns
+helm -n external-dns get values external-dns --all
+helm -n external-dns get manifest external-dns
 ```
 
 Show the `adot` OpenTelemetryCollector instance:
@@ -171,15 +212,17 @@ kill %1 && sleep 3
 Access the `otel-example` Ingress from the Internet:
 
 ```bash
-otel_example_address="$(kubectl get ingress/otel-example -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')"
 otel_example_host="$(kubectl get ingress/otel-example -o jsonpath='{.spec.rules[0].host}')"
-otel_example_url="http://$otel_example_address"
-echo "otel-example ingress address: $otel_example_address"
-echo "otel-example ingress host: $otel_example_host"
-# wait for the address to resolve.
-while [ -z "$(dig +short "$otel_example_address")" ]; do sleep 5; done && dig "$otel_example_address"
+otel_example_url="http://$otel_example_host"
+echo "otel-example ingress url: $otel_example_url"
+# wait for the host to resolve at the first route 53 name server.
+ingress_domain_name_server="$(terramate run -C stacks/eks-aws-load-balancer-controller terraform output -json ingress_domain_name_servers | jq -r '.[0]')"
+while [ -z "$(dig +short "$otel_example_host" "@$ingress_domain_name_server")" ]; do sleep 5; done && dig "$otel_example_host" "@$ingress_domain_name_server"
+# wait for the host to resolve at the public internet (from the viewpoint
+# of our local dns resolver).
+while [ -z "$(dig +short "$otel_example_host")" ]; do sleep 5; done && dig "$otel_example_host"
 # finally, access the service.
-wget -qO- --header "Host:$otel_example_host" "$otel_example_url/quote" | jq
+wget -qO- "$otel_example_host/quote" | jq
 ```
 
 Access the `kubernetes-hello` ClusterIP Service from a [kubectl port-forward local port](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/):
@@ -194,15 +237,17 @@ kill %1 && sleep 3
 Access the `kubernetes-hello` Ingress from the Internet:
 
 ```bash
-kubernetes_hello_address="$(kubectl get ingress/kubernetes-hello -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')"
 kubernetes_hello_host="$(kubectl get ingress/kubernetes-hello -o jsonpath='{.spec.rules[0].host}')"
-kubernetes_hello_url="http://$kubernetes_hello_address"
-echo "kubernetes-hello ingress domain: $kubernetes_hello_address"
-echo "kubernetes-hello ingress host: $kubernetes_hello_host"
-# wait for the address to resolve.
-while [ -z "$(dig +short "$kubernetes_hello_address")" ]; do sleep 5; done && dig "$kubernetes_hello_address"
+kubernetes_hello_url="http://$kubernetes_hello_host"
+echo "kubernetes-hello ingress url: $kubernetes_hello_url"
+# wait for the host to resolve at the first route 53 name server.
+ingress_domain_name_server="$(terramate run -C stacks/eks-aws-load-balancer-controller terraform output -json ingress_domain_name_servers | jq -r '.[0]')"
+while [ -z "$(dig +short "$kubernetes_hello_host" "@$ingress_domain_name_server")" ]; do sleep 5; done && dig "$kubernetes_hello_host" "@$ingress_domain_name_server"
+# wait for the host to resolve at the public internet (from the viewpoint
+# of our local dns resolver).
+while [ -z "$(dig +short "$kubernetes_hello_host")" ]; do sleep 5; done && dig "$kubernetes_hello_host"
 # finally, access the service.
-wget -qO- --header "Host:$kubernetes_hello_host" "$kubernetes_hello_url"
+wget -qO- "$kubernetes_hello_url"
 ```
 
 Log in the container registry:

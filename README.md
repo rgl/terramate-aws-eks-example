@@ -295,6 +295,16 @@ echo "kubernetes-hello ingress host: $kubernetes_hello_host"
 xdg-open https://www.ssllabs.com/ssltest/
 ```
 
+List all the used container images:
+
+```bash
+# see https://kubernetes.io/docs/tasks/access-application-cluster/list-all-running-container-images/
+kubectl get pods --all-namespaces \
+  -o jsonpath="{.items[*].spec['initContainers','containers'][*].image}" \
+  | tr -s '[[:space:]]' '\n' \
+  | sort --unique
+```
+
 Log in the container registry:
 
 **NB** You are logging in at the registry level. You are not logging in at the

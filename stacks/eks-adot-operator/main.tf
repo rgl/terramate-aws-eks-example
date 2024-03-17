@@ -14,11 +14,11 @@ data "aws_eks_cluster" "eks" {
 # see https://github.com/open-telemetry/opentelemetry-operator
 # see https://github.com/open-telemetry/opentelemetry-collector
 # see https://github.com/aws-observability/terraform-aws-observability-accelerator/issues/247
-# see https://github.com/aws-ia/terraform-aws-eks-blueprints-addons/releases/tag/v1.16.0
+# see https://github.com/aws-ia/terraform-aws-eks-blueprints-addons/releases/tag/v1.16.1
 # see https://github.com/aws-ia/terraform-aws-eks-blueprints-addons
 module "adot_operator" {
   source  = "aws-ia/eks-blueprints-addons/aws"
-  version = "1.16.0"
+  version = "1.16.1"
 
   cluster_name      = data.aws_eks_cluster.eks.name
   cluster_endpoint  = data.aws_eks_cluster.eks.endpoint

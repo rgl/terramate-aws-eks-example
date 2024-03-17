@@ -29,7 +29,7 @@ globals {
       # see https://github.com/rgl/kubernetes-hello
       name = "docker.io/ruilopes/kubernetes-hello"
       # renovate: datasource=docker depName=ruilopes/kubernetes-hello
-      tag = "v0.0.0.202403070852-test"
+      tag = "v0.0.0.202403171105-test"
     }
   }
 }
@@ -37,14 +37,14 @@ globals {
 # see https://github.com/hashicorp/terraform
 globals "terraform" {
   # renovate: datasource=github-releases depName=hashicorp/terraform
-  version = "1.7.4"
+  version = "1.7.5"
 }
 
 # see https://registry.terraform.io/providers/hashicorp/aws
 # see https://github.com/hashicorp/terraform-provider-aws
 globals "terraform" "providers" "aws" {
   # renovate: datasource=terraform-provider depName=hashicorp/aws
-  version = "5.40.0"
+  version = "5.41.0"
 }
 
 # see https://registry.terraform.io/providers/hashicorp/cloudinit

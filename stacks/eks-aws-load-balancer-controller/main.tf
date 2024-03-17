@@ -23,11 +23,11 @@ resource "aws_route53_zone" "ingress" {
 # see https://github.com/kubernetes-sigs/aws-load-balancer-controller/tree/v2.7.1/helm/aws-load-balancer-controller
 # see https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/tag/v2.7.1
 # see https://github.com/kubernetes-sigs/aws-load-balancer-controller/
-# see https://github.com/aws-ia/terraform-aws-eks-blueprints-addons/releases/tag/v1.16.0
+# see https://github.com/aws-ia/terraform-aws-eks-blueprints-addons/releases/tag/v1.16.1
 # see https://github.com/aws-ia/terraform-aws-eks-blueprints-addons
 module "aws_load_balancer_controller" {
   source  = "aws-ia/eks-blueprints-addons/aws"
-  version = "1.16.0"
+  version = "1.16.1"
 
   cluster_name      = data.aws_eks_cluster.eks.name
   cluster_endpoint  = data.aws_eks_cluster.eks.endpoint
@@ -52,11 +52,11 @@ module "aws_load_balancer_controller" {
 # see https://github.com/kubernetes-sigs/external-dns/tree/v0.14.0/charts/external-dns/Chart.yaml
 # see https://github.com/kubernetes-sigs/external-dns/tree/v0.14.0/charts/external-dns/values.yaml
 # see https://kubernetes-sigs.github.io/external-dns/
-# see https://github.com/aws-ia/terraform-aws-eks-blueprints-addons/releases/tag/v1.16.0
+# see https://github.com/aws-ia/terraform-aws-eks-blueprints-addons/releases/tag/v1.16.1
 # see https://github.com/aws-ia/terraform-aws-eks-blueprints-addons
 module "external_dns" {
   source  = "aws-ia/eks-blueprints-addons/aws"
-  version = "1.16.0"
+  version = "1.16.1"
 
   cluster_name      = data.aws_eks_cluster.eks.name
   cluster_endpoint  = data.aws_eks_cluster.eks.endpoint

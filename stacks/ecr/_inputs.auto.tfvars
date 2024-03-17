@@ -4,7 +4,7 @@ environment = "dev"
 images = {
   kubernetes-hello = {
     name = "docker.io/ruilopes/kubernetes-hello"
-    tag  = "v0.0.0.202403070852-test"
+    tag  = "v0.0.0.202403171105-test"
   }
   otel-example = {
     name = "ghcr.io/rgl/opentelemetry-dotnet-playground"

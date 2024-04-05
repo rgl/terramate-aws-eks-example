@@ -8,6 +8,7 @@ This will:
 
 * Create an Elastic Kubernetes Service (EKS)-based Kubernetes cluster.
   * Enable the [VPC CNI cluster add-on](https://docs.aws.amazon.com/eks/latest/userguide/managing-vpc-cni.html).
+  * Enable the [EBS CSI cluster add-on](https://docs.aws.amazon.com/eks/latest/userguide/eks-add-ons.html).
   * Enable the [AWS Distro for OpenTelemetry (ADOT) Operator add-on](https://docs.aws.amazon.com/eks/latest/userguide/opentelemetry.html).
   * Create the [AWS Distro for OpenTelemetry (ADOT) Collector Deployment and `adot-collector` Service](https://aws-otel.github.io).
     * Forwarding OpenTelemetry telemetry signals to [Amazon CloudWatch](https://aws.amazon.com/cloudwatch/).
@@ -40,6 +41,12 @@ This will:
     * Note that this results in the creation of an [EC2 Application Load Balancer (ALB)](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html).
   * Send OpenTelemetry telemetry signals to the [`adot-collector` service](stacks/eks/adot-collector/main.tf).
     * Send the logs telemetry signal to the Amazon CloudWatch Logs service.
+* Demonstrate how to manually deploy a stateful application.
+  * Deploy the [etcd key-value store](https://etcd.io).
+    * Use a [`StatefulSet` Workload](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/).
+    * Use a [`PersistentVolumeClaim` Persistent Volume](https://kubernetes.io/docs/concepts/storage/persistent-volumes/).
+  * Deploy the [hello-etcd example application](https://github.com/rgl/hello-etcd).
+    * Use the etcd key-value store.
 
 The main components are:
 
@@ -201,6 +208,12 @@ Access the EKS cluster:
 export KUBECONFIG="$PWD/kubeconfig.yml"
 kubectl cluster-info
 kubectl get nodes -o wide
+kubectl get ingressclass
+kubectl get storageclass
+# NB notice that the ReclaimPolicy is Delete. this means that, when we delete a
+#    PersistentVolumeClaim or PersistentVolume, the volume will be deleted from
+#    the AWS account.
+kubectl describe storageclass/gp2
 ```
 
 List the installed Helm chart releases:
@@ -293,6 +306,71 @@ Audit the `kubernetes-example` Ingress TLS implementation:
 kubernetes_hello_host="$(kubectl get ingress/kubernetes-hello -o jsonpath='{.spec.rules[0].host}')"
 echo "kubernetes-hello ingress host: $kubernetes_hello_host"
 xdg-open https://www.ssllabs.com/ssltest/
+```
+
+Deploy the [example hello-etcd stateful application](https://github.com/rgl/hello-etcd):
+
+```bash
+install -d tmp/hello-etcd
+pushd tmp/hello-etcd
+wget -qO- https://raw.githubusercontent.com/rgl/hello-etcd/v0.0.2/manifest.yml \
+  | perl -pe 's,(storageClassName:).+,$1 gp2,g' \
+  > manifest.yml
+kubectl apply -f manifest.yml
+kubectl rollout status deployment hello-etcd
+kubectl rollout status statefulset hello-etcd-etcd
+kubectl get service,statefulset,pod,pvc,pv,sc
+```
+
+Access the `hello-etcd` service from a [kubectl port-forward local port](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/):
+
+```bash
+kubectl port-forward service/hello-etcd 6789:web & && sleep 3
+wget -qO- http://localhost:6789 # Hello World #1!
+wget -qO- http://localhost:6789 # Hello World #2!
+wget -qO- http://localhost:6789 # Hello World #3!
+```
+
+Delete the etcd pod:
+
+```bash
+# NB the used gp2 StorageClass is configured with ReclaimPolicy set to Delete.
+#    this means that, when we delete the application PersistentVolumeClaim, the
+#    volume will be deleted from the AWS account. this also means that, to play
+#    with this, we cannot delete all the application resource. we have to keep
+#    the persistent volume around by only deleting the etcd pod.
+# NB although we delete the pod, the StatefulSet will create a fresh pod to
+#    replace it. using the same persistent volume as the old one.
+kubectl delete pod/hello-etcd-etcd-0
+kubectl get pod/hello-etcd-etcd-0 # NB its age should be in the seconds range.
+kubectl get pvc,pv
+```
+
+Access the application, and notice that the counter continues after the previously returned value, which means that although the etcd instance is different, it picked up the same persistent volume:
+
+```bash
+wget -qO- http://localhost:6789 # Hello World #4!
+wget -qO- http://localhost:6789 # Hello World #5!
+wget -qO- http://localhost:6789 # Hello World #6!
+```
+
+Delete everything:
+
+```bash
+kubectl delete -f manifest.yml
+kill %1 # kill the kubectl port-forward background command execution.
+# NB the persistent volume will linger for a bit, until it will be eventually
+#    reclaimed and deleted (because the StorageClass is configured with
+#    ReclaimPolicy set to Delete).
+kubectl get pvc,pv
+# force the persistent volume deletion.
+# NB if you do not do this (or wait until the persistent volume is actually
+#    deleted), the associated AWS EBS volume we be left created in your AWS
+#    account, and you have to manually delete it from there.
+kubectl delete pvc/etcd-data-hello-etcd-etcd-0
+# NB you should wait until its actually deleted.
+kubectl get pvc,pv
+popd
 ```
 
 List all the used container images:

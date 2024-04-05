@@ -9,7 +9,9 @@
         "opentelemetry",
         "opentelemetrycollector",
         "otel",
+        "popd",
         "pulumi",
+        "pushd",
         "quickstart",
         "Terramate"
     ]

@@ -570,7 +570,7 @@ adot-operator
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1550</x>
+      <x>1440</x>
       <y>280</y>
       <w>90</w>
       <h>50</h>
@@ -923,5 +923,18 @@ external-dns-&lt;id&gt;
     <panel_attributes>m2=&lt;&lt;assume role&gt;&gt;
 lt=-&gt;</panel_attributes>
     <additional_attributes>210.0;10.0;20.0;10.0;10.0;20.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1550</x>
+      <y>280</y>
+      <w>90</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;add-on&gt;&gt;
+ebs-csi
+</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>

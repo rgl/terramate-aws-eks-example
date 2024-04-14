@@ -37,7 +37,7 @@ module "aws_ebs_csi" {
 # see https://registry.terraform.io/modules/terraform-aws-modules/iam/aws/latest
 module "aws_ebs_csi_irsa" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version = "5.37.2"
+  version = "5.39.0"
 
   role_name_prefix = "${data.aws_eks_cluster.eks.name}-ebs-csi-"
 

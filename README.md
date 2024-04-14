@@ -315,6 +315,7 @@ install -d tmp/hello-etcd
 pushd tmp/hello-etcd
 wget -qO- https://raw.githubusercontent.com/rgl/hello-etcd/v0.0.2/manifest.yml \
   | perl -pe 's,(storageClassName:).+,$1 gp2,g' \
+  | perl -pe 's,(storage:).+,$1 100Mi,g' \
   > manifest.yml
 kubectl apply -f manifest.yml
 kubectl rollout status deployment hello-etcd

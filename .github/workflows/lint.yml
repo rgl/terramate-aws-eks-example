@@ -11,11 +11,11 @@ jobs:
       - uses: hashicorp/setup-terraform@v3
         with:
           # renovate: datasource=github-releases depName=hashicorp/terraform
-          terraform_version: "1.8.0"
+          terraform_version: "1.8.2"
       - uses: terramate-io/terramate-action@v1
         with:
           # renovate: datasource=github-releases depName=terramate-io/terramate
-          version: "0.6.0"
+          version: "0.8.0"
       - name: terramate generate check
         run: terramate generate --detailed-exit-code
       - name: terramate fmt check
@@ -32,11 +32,11 @@ jobs:
       - uses: hashicorp/setup-terraform@v3
         with:
           # renovate: datasource=github-releases depName=hashicorp/terraform
-          terraform_version: "1.8.0"
+          terraform_version: "1.8.2"
       - uses: terramate-io/terramate-action@v1
         with:
           # renovate: datasource=github-releases depName=terramate-io/terramate
-          version: "0.6.0"
+          version: "0.8.0"
       - name: Init
         run: terramate run terraform init -lockfile=readonly
       - name: Validate
@@ -51,11 +51,11 @@ jobs:
       - uses: hashicorp/setup-terraform@v3
         with:
           # renovate: datasource=github-releases depName=hashicorp/terraform
-          terraform_version: "1.8.0"
+          terraform_version: "1.8.2"
       - uses: terramate-io/terramate-action@v1
         with:
           # renovate: datasource=github-releases depName=terramate-io/terramate
-          version: "0.6.0"
+          version: "0.8.0"
       - uses: terraform-linters/setup-tflint@v4
         name: Setup
         with:

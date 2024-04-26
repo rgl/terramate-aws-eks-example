@@ -8,6 +8,7 @@ This will:
 
 * Create an Elastic Kubernetes Service (EKS)-based Kubernetes cluster.
   * Enable the [VPC CNI cluster add-on](https://docs.aws.amazon.com/eks/latest/userguide/managing-vpc-cni.html).
+  * Enable the [EKS Pod Identity Agent add-on](https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html).
   * Enable the [EBS CSI cluster add-on](https://docs.aws.amazon.com/eks/latest/userguide/eks-add-ons.html).
   * Enable the [AWS Distro for OpenTelemetry (ADOT) Operator add-on](https://docs.aws.amazon.com/eks/latest/userguide/opentelemetry.html).
   * Create the [AWS Distro for OpenTelemetry (ADOT) Collector Deployment and `adot-collector` Service](https://aws-otel.github.io).
@@ -574,6 +575,7 @@ GITHUB_COM_TOKEN='YOUR_GITHUB_PERSONAL_TOKEN' ./renovate.sh
 * [Network load balancing on Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/network-load-balancing.html)
 * [Amazon EKS add-ons](https://docs.aws.amazon.com/eks/latest/userguide/eks-add-ons.html)
 * [Amazon EKS VPC-CNI](https://github.com/aws/amazon-vpc-cni-k8s)
+* [EKS Pod Identities](https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html)
 * [EKS Workshop](https://www.eksworkshop.com)
   * [Using Terraform](https://www.eksworkshop.com/docs/introduction/setup/your-account/using-terraform)
     * [aws-samples/eks-workshop-v2 example repository](https://github.com/aws-samples/eks-workshop-v2/tree/main/cluster/terraform)

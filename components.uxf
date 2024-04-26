@@ -570,7 +570,7 @@ adot-operator
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1440</x>
+      <x>1310</x>
       <y>280</y>
       <w>90</w>
       <h>50</h>
@@ -935,6 +935,18 @@ lt=-&gt;</panel_attributes>
     <panel_attributes>&lt;&lt;add-on&gt;&gt;
 ebs-csi
 </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1420</x>
+      <y>280</y>
+      <w>110</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;add-on&gt;&gt;
+pod-identity</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>

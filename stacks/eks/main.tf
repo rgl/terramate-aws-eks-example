@@ -33,6 +33,14 @@ module "eks" {
         enableNetworkPolicy = "true"
       })
     }
+    # see https://docs.aws.amazon.com/eks/latest/userguide/eks-add-ons.html
+    # see https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html
+    # see https://github.com/terraform-aws-modules/terraform-aws-eks-pod-identity
+    # see https://github.com/aws/containers-roadmap/issues/2239
+    # see https://github.com/aws-ia/terraform-aws-eks-blueprints-addons/issues/289
+    eks-pod-identity-agent = {
+      most_recent = true
+    }
   }
 
   vpc_id     = module.vpc.vpc_id

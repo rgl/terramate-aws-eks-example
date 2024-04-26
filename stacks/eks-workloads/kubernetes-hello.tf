@@ -43,6 +43,34 @@ resource "aws_route53_record" "kubernetes_hello_certificate_validation" {
   zone_id         = data.aws_route53_zone.ingress.zone_id
 }
 
+# see https://registry.terraform.io/modules/terraform-aws-modules/eks-pod-identity/aws
+# see https://github.com/terraform-aws-modules/terraform-aws-eks-pod-identity
+module "aws_eks_pod_identity_kubernetes_hello" {
+  source  = "terraform-aws-modules/eks-pod-identity/aws"
+  version = "1.2.0"
+
+  name = "${data.aws_eks_cluster.eks.id}-${kubernetes_service_v1.kubernetes_hello.metadata[0].name}"
+  associations = {
+    kubernetes_hello = {
+      cluster_name    = data.aws_eks_cluster.eks.id
+      namespace       = "default"
+      service_account = kubernetes_service_v1.kubernetes_hello.metadata[0].name
+    }
+  }
+  attach_custom_policy = true
+  policy_statements = [
+    {
+      sid = "Route53"
+      actions = [
+        "route53:Get*",
+        "route53:List*",
+        "route53:TestDNSAnswer",
+      ]
+      resources = ["*"]
+    }
+  ]
+}
+
 # see https://kubernetes.io/docs/reference/access-authn-authz/rbac/
 # see https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#role-v1-rbac-authorization-k8s-io
 # see https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/role_v1
@@ -322,4 +350,7 @@ resource "kubernetes_deployment_v1" "kubernetes_hello" {
       }
     }
   }
+  depends_on = [
+    module.aws_eks_pod_identity_kubernetes_hello,
+  ]
 }

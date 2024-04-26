@@ -40,6 +40,7 @@ This will:
   * Use [Secret](https://kubernetes.io/docs/concepts/configuration/secret/).
   * Use [ServiceAccount](https://kubernetes.io/docs/concepts/security/service-accounts/).
   * Use [Service Account token volume projection (a JSON Web Token and OpenID Connect (OIDC) ID Token)](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#serviceaccount-token-volume-projection) for the `https://example.com` audience.
+  * Use [Pod Identity authentication](https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html) to list the DNS Zones hosted in [Route 53](https://aws.amazon.com/route53/).
 * Demonstrate how to automatically deploy the [`otel-example` workload](stacks/eks-workloads/otel-example.tf).
   * Expose as a Kubernetes `Ingress` `Service`.
     * Use a sub-domain in the DNS Zone.
@@ -310,6 +311,23 @@ while [ -z "$(dig +short "$kubernetes_hello_host")" ]; do sleep 5; done && dig "
 wget -qO- "$kubernetes_hello_url"
 ```
 
+**NB** If you do not see any DNS Zone being listed, most probably, the
+race ([described in the Caveats section](#caveats)), was lost, and you need
+to re-create the pods:
+
+```bash
+# delete the pods and wait for them to be re-deployed.
+kubectl delete pods -l app=kubernetes-hello
+kubectl rollout status deployment kubernetes-hello
+# check whether the required Pod Identity environment variables are listed.
+# they should be, at least, the following:
+#   AWS_CONTAINER_CREDENTIALS_FULL_URI
+#   AWS_CONTAINER_AUTHORIZATION_TOKEN_FILE
+kubectl get pods -l app=kubernetes-hello -o yaml | grep -A 1 AWS_
+# re-access the service. this time, you should see a "AWS DNS Zones" section.
+wget -qO- "$kubernetes_hello_url"
+```
+
 Audit the `kubernetes-example` Ingress TLS implementation:
 
 ```bash
@@ -513,6 +531,16 @@ GITHUB_COM_TOKEN='YOUR_GITHUB_PERSONAL_TOKEN' ./renovate.sh
 
 # Caveats
 
+* When configuring the Pod Identity with terraform, there's a race between
+  creating the `aws_eks_pod_identity_association` and `kubernetes_deployment_v1`
+  (and any resource that (in)directly creates Pods) resources. The created pod
+  ends up not having the required environment variables that allow it to
+  actually have a Pod Identity.
+  * When the Pod does not have the `AWS_CONTAINER_CREDENTIALS_FULL_URI` and
+  `AWS_CONTAINER_AUTHORIZATION_TOKEN_FILE` environment variables, you must
+  re-create the pod, and hope for the best.
+  * See [How EKS Pod Identity works](https://docs.aws.amazon.com/eks/latest/userguide/pod-id-how-it-works.html).
+  * See https://github.com/terraform-aws-modules/terraform-aws-eks-pod-identity/issues/8
 * After `terraform destroy`, the following resources will still remain in AWS:
   * KMS Kubernetes cluster encryption key.
     * It will be automatically deleted after 30 days (the default value

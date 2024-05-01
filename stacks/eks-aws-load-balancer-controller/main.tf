@@ -17,6 +17,7 @@ resource "aws_route53_zone" "ingress" {
   force_destroy = true
 }
 
+# see https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html
 # see https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.7/
 # see https://github.com/kubernetes-sigs/aws-load-balancer-controller/tree/v2.7.1/helm/aws-load-balancer-controller/Chart.yaml
 # see https://github.com/kubernetes-sigs/aws-load-balancer-controller/tree/v2.7.1/helm/aws-load-balancer-controller/values.yaml

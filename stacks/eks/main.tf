@@ -18,6 +18,7 @@ module "eks" {
   cluster_endpoint_public_access = true
 
   cluster_addons = {
+    # see https://docs.aws.amazon.com/eks/latest/userguide/managing-vpc-cni.html
     # see https://docs.aws.amazon.com/eks/latest/userguide/eks-add-ons.html
     # see https://github.com/aws/amazon-vpc-cni-k8s
     vpc-cni = {
@@ -60,9 +61,5 @@ module "eks" {
         max_unavailable_percentage = 50
       }
     }
-  }
-
-  tags = {
-    "karpenter.sh/discovery" = var.cluster_name
   }
 }

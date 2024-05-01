@@ -15,7 +15,7 @@ jobs:
       - uses: terramate-io/terramate-action@v1
         with:
           # renovate: datasource=github-releases depName=terramate-io/terramate
-          version: "0.8.0"
+          version: "0.8.1"
       - name: terramate generate check
         run: terramate generate --detailed-exit-code
       - name: terramate fmt check
@@ -36,7 +36,7 @@ jobs:
       - uses: terramate-io/terramate-action@v1
         with:
           # renovate: datasource=github-releases depName=terramate-io/terramate
-          version: "0.8.0"
+          version: "0.8.1"
       - name: Init
         run: terramate run terraform init -lockfile=readonly
       - name: Validate
@@ -55,7 +55,7 @@ jobs:
       - uses: terramate-io/terramate-action@v1
         with:
           # renovate: datasource=github-releases depName=terramate-io/terramate
-          version: "0.8.0"
+          version: "0.8.1"
       - uses: terraform-linters/setup-tflint@v4
         name: Setup
         with:

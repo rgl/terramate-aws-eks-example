@@ -21,4 +21,5 @@ locals {
   }
   otel_example_image     = local.images.otel-example
   kubernetes_hello_image = local.images.kubernetes-hello
+  docdb_example_image    = local.images.docdb-example
 }

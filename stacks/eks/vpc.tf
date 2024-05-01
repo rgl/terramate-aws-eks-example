@@ -1,7 +1,8 @@
 locals {
-  azs             = slice(data.aws_availability_zones.available.names, 0, 2)
-  public_subnets  = [for k, v in local.azs : cidrsubnet(var.vpc_cidr, 3, k)]
-  private_subnets = [for k, v in local.azs : cidrsubnet(var.vpc_cidr, 3, k + length(local.azs))]
+  azs              = slice(data.aws_availability_zones.available.names, 0, 2)
+  public_subnets   = [for k, v in local.azs : cidrsubnet(var.vpc_cidr, 3, k + 0 * length(local.azs))]
+  private_subnets  = [for k, v in local.azs : cidrsubnet(var.vpc_cidr, 3, k + 1 * length(local.azs))]
+  database_subnets = [for k, v in local.azs : cidrsubnet(var.vpc_cidr, 3, k + 2 * length(local.azs))]
 }
 
 data "aws_availability_zones" "available" {
@@ -19,10 +20,11 @@ module "vpc" {
 
   name = var.cluster_name
 
-  azs             = local.azs
-  cidr            = var.vpc_cidr
-  public_subnets  = local.public_subnets
-  private_subnets = local.private_subnets
+  azs              = local.azs
+  cidr             = var.vpc_cidr
+  public_subnets   = local.public_subnets
+  private_subnets  = local.private_subnets
+  database_subnets = local.database_subnets
 
   enable_nat_gateway = true
   single_nat_gateway = true

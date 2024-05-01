@@ -2,6 +2,10 @@
 
 environment = "dev"
 images = {
+  docdb-example = {
+    name = "ghcr.io/rgl/aws-docdb-example"
+    tag  = "0.0.1"
+  }
   kubernetes-hello = {
     name = "docker.io/ruilopes/kubernetes-hello"
     tag  = "v0.0.202404261745"

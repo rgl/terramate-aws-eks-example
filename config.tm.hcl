@@ -31,6 +31,13 @@ globals {
       # renovate: datasource=docker depName=ruilopes/kubernetes-hello
       tag = "v0.0.202404261745"
     }
+    # see https://github.com/rgl/aws-docdb-example/pkgs/container/aws-docdb-example
+    # see https://github.com/rgl/aws-docdb-example
+    docdb-example = {
+      name = "ghcr.io/rgl/aws-docdb-example"
+      # renovate: datasource=docker depName=rgl/aws-docdb-example registryUrl=https://ghcr.io
+      tag = "0.0.1"
+    }
   }
 }
 
@@ -87,4 +94,11 @@ globals "terraform" "providers" "time" {
 globals "terraform" "providers" "tls" {
   # renovate: datasource=terraform-provider depName=hashicorp/tls
   version = "4.0.5"
+}
+
+# see https://registry.terraform.io/providers/hashicorp/external
+# see https://github.com/hashicorp/terraform-provider-external
+globals "terraform" "providers" "external" {
+  # renovate: datasource=terraform-provider depName=hashicorp/external
+  version = "2.3.3"
 }

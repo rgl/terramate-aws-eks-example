@@ -3,6 +3,7 @@
         "adot",
         "awslabs",
         "Distro",
+        "docdb",
         "IRSA",
         "KUBECONFIG",
         "oidc",

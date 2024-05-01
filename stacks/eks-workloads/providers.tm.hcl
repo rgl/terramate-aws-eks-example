@@ -21,6 +21,12 @@ generate_hcl "_providers.tf" {
           source  = "hashicorp/helm"
           version = global.terraform.providers.helm.version
         }
+        # see https://registry.terraform.io/providers/hashicorp/external
+        # see https://github.com/hashicorp/terraform-provider-external
+        external = {
+          source  = "hashicorp/external"
+          version = global.terraform.providers.external.version
+        }
       }
     }
 

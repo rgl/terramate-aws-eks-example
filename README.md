@@ -18,6 +18,7 @@ This will:
 * Create a public DNS Zone using [Amazon Route 53](https://aws.amazon.com/route53/).
   * Note that you need to configure the parent DNS Zone to delegate to this DNS Zone name servers.
   * Use [external-dns](https://github.com/kubernetes-sigs/external-dns) to create the Ingress DNS Resource Records in the DNS Zone.
+* Create an [example AWS DocumentDB](stacks/eks/docdb.tf).
 * Demonstrate how to automatically deploy the [`kubernetes-hello` workload](stacks/eks-workloads/kubernetes-hello.tf).
   * Show its environment variables.
   * Show its tokens, secrets, and configs (config maps).
@@ -47,6 +48,8 @@ This will:
     * Use a [`PersistentVolumeClaim` Persistent Volume](https://kubernetes.io/docs/concepts/storage/persistent-volumes/).
   * Deploy the [hello-etcd example application](https://github.com/rgl/hello-etcd).
     * Use the etcd key-value store.
+* Demonstrate how to automatically deploy the [`docdb-example` workload](stacks/eks-workloads/docdb-example.tf).
+  * Use [the deployed example AWS DocumentDB](stacks/eks/docdb.tf).
 
 The main components are:
 
@@ -64,6 +67,7 @@ Install the dependencies:
 * [Terraform](https://www.terraform.io/downloads.html).
 * [Terramate](https://terramate.io/docs/cli/installation).
 * [Crane](https://github.com/google/go-containerregistry/releases).
+* [jq](https://github.com/jqlang/jq/releases).
 * [Docker](https://docs.docker.com/engine/install/).
 
 Set the AWS Account credentials using SSO:
@@ -372,6 +376,31 @@ kubectl delete pvc/etcd-data-hello-etcd-etcd-0
 # NB you should wait until its actually deleted.
 kubectl get pvc,pv
 popd
+```
+
+Access the `docdb-example` ClusterIP Service from a [kubectl port-forward local port](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/):
+
+```bash
+kubectl port-forward service/docdb-example 6789:80 &
+sleep 3 && printf '\n\n'
+wget -qO- http://localhost:6789
+kill %1 && sleep 3
+```
+
+Access the `docdb-example` Ingress from the Internet:
+
+```bash
+docdb_example_host="$(kubectl get ingress/docdb-example -o jsonpath='{.spec.rules[0].host}')"
+docdb_example_url="https://$docdb_example_host"
+echo "docdb-example ingress url: $docdb_example_url"
+# wait for the host to resolve at the first route 53 name server.
+ingress_domain_name_server="$(terramate run -C stacks/eks-aws-load-balancer-controller terraform output -json ingress_domain_name_servers | jq -r '.[0]')"
+while [ -z "$(dig +short "$docdb_example_host" "@$ingress_domain_name_server")" ]; do sleep 5; done && dig "$docdb_example_host" "@$ingress_domain_name_server"
+# wait for the host to resolve at the public internet (from the viewpoint
+# of our local dns resolver).
+while [ -z "$(dig +short "$docdb_example_host")" ]; do sleep 5; done && dig "$docdb_example_host"
+# finally, access the service.
+wget -qO- "$docdb_example_url"
 ```
 
 List all the used container images:

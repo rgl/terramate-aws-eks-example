@@ -1,11 +1,11 @@
 // TERRAMATE: GENERATED AUTOMATICALLY DO NOT EDIT
 
 terraform {
-  required_version = "1.8.2"
+  required_version = "1.8.3"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "5.47.0"
+      version = "5.49.0"
     }
     cloudinit = {
       source  = "hashicorp/cloudinit"
@@ -13,11 +13,11 @@ terraform {
     }
     helm = {
       source  = "hashicorp/helm"
-      version = "2.13.1"
+      version = "2.13.2"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "2.29.0"
+      version = "2.30.0"
     }
     local = {
       source  = "hashicorp/local"

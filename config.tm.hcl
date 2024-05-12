@@ -29,7 +29,7 @@ globals {
       # see https://github.com/rgl/kubernetes-hello
       name = "docker.io/ruilopes/kubernetes-hello"
       # renovate: datasource=docker depName=ruilopes/kubernetes-hello
-      tag = "v0.0.202404261745"
+      tag = "v0.0.202405112126"
     }
     # see https://github.com/rgl/aws-docdb-example/pkgs/container/aws-docdb-example
     # see https://github.com/rgl/aws-docdb-example
@@ -44,14 +44,14 @@ globals {
 # see https://github.com/hashicorp/terraform
 globals "terraform" {
   # renovate: datasource=github-releases depName=hashicorp/terraform
-  version = "1.8.2"
+  version = "1.8.3"
 }
 
 # see https://registry.terraform.io/providers/hashicorp/aws
 # see https://github.com/hashicorp/terraform-provider-aws
 globals "terraform" "providers" "aws" {
   # renovate: datasource=terraform-provider depName=hashicorp/aws
-  version = "5.47.0"
+  version = "5.49.0"
 }
 
 # see https://registry.terraform.io/providers/hashicorp/cloudinit
@@ -65,14 +65,14 @@ globals "terraform" "providers" "cloudinit" {
 # see https://github.com/hashicorp/terraform-provider-kubernetes
 globals "terraform" "providers" "kubernetes" {
   # renovate: datasource=terraform-provider depName=hashicorp/kubernetes
-  version = "2.29.0"
+  version = "2.30.0"
 }
 
 # see https://registry.terraform.io/providers/hashicorp/helm
 # see https://github.com/hashicorp/terraform-provider-helm
 globals "terraform" "providers" "helm" {
   # renovate: datasource=terraform-provider depName=hashicorp/helm
-  version = "2.13.1"
+  version = "2.13.2"
 }
 
 # see https://registry.terraform.io/providers/hashicorp/local

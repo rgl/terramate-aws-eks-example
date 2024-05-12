@@ -8,7 +8,7 @@ images = {
   }
   kubernetes-hello = {
     name = "docker.io/ruilopes/kubernetes-hello"
-    tag  = "v0.0.202404261745"
+    tag  = "v0.0.202405112126"
   }
   otel-example = {
     name = "ghcr.io/rgl/opentelemetry-dotnet-playground"

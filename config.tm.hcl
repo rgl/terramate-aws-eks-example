@@ -75,6 +75,13 @@ globals "terraform" "providers" "helm" {
   version = "2.13.2"
 }
 
+# see https://registry.terraform.io/providers/hashicorp/http
+# see https://github.com/hashicorp/terraform-provider-http
+globals "terraform" "providers" "http" {
+  # renovate: datasource=terraform-provider depName=hashicorp/http
+  version = "3.4.2"
+}
+
 # see https://registry.terraform.io/providers/hashicorp/local
 # see https://github.com/hashicorp/terraform-provider-local
 globals "terraform" "providers" "local" {

@@ -54,6 +54,7 @@ This will:
     * Use the etcd key-value store.
 * Demonstrate how to automatically deploy the [`docdb-example` workload](stacks/eks-workloads/docdb-example.tf).
   * Use [the deployed example AWS DocumentDB](stacks/eks/docdb.tf).
+  * Use a `trust-manager` managed CA certificates volume that includes the [Amazon RDS CA certificates (i.e. `global-bundle.pem`)](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html#UsingWithRDS.SSL.CertificatesAllRegions).
 
 The main components are:
 
@@ -405,6 +406,16 @@ while [ -z "$(dig +short "$docdb_example_host" "@$ingress_domain_name_server")" 
 while [ -z "$(dig +short "$docdb_example_host")" ]; do sleep 5; done && dig "$docdb_example_host"
 # finally, access the service.
 wget -qO- "$docdb_example_url"
+```
+
+Verify the trusted CA certificates, this should include the Amazon RDS CA
+certificates (e.g. `Amazon RDS eu-west-1 Root CA RSA2048 G1`):
+
+```bash
+kubectl exec --stdin deployment/docdb-example -- bash <<'EOF'
+openssl crl2pkcs7 -nocrl -certfile /etc/ssl/certs/ca-certificates.crt \
+  | openssl pkcs7 -print_certs -text -noout
+EOF
 ```
 
 List all the used container images:

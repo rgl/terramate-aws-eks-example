@@ -2,7 +2,7 @@ locals {
   docdb_example_fqdn = "docdb-example.${var.ingress_domain}"
   # see Connecting Programmatically to Amazon DocumentDB at https://docs.aws.amazon.com/documentdb/latest/developerguide/
   docdb_example_master_connection_string = format(
-    "mongodb://%s:%s@%s:%d/?tls=true&tlsCAFile=global-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false",
+    "mongodb://%s:%s@%s:%d/?tls=true&tlsCAFile=/etc/ssl/certs/ca-certificates.crt&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false",
     urlencode("master"),
     urlencode("Ex0mple!"),
     data.external.docdb_example.result.endpoint,
@@ -176,6 +176,12 @@ resource "kubernetes_deployment_v1" "docdb_example" {
               }
             }
           }
+          # see https://github.com/golang/go/blob/go1.22.3/src/crypto/x509/root_linux.go
+          volume_mount {
+            name       = "ca-certificates"
+            mount_path = "/etc/ssl/certs"
+            read_only  = true
+          }
           port {
             name           = "web"
             container_port = 8000
@@ -196,6 +202,70 @@ resource "kubernetes_deployment_v1" "docdb_example" {
               memory = "24Mi"
             }
           }
+        }
+        volume {
+          name = "ca-certificates"
+          config_map {
+            name         = kubernetes_manifest.docdb_example_ca_certificates.manifest.metadata.name
+            default_mode = "0444"
+          }
+        }
+      }
+    }
+  }
+}
+
+# see https://docs.aws.amazon.com/documentdb/latest/developerguide/connect_programmatically.html#connect_programmatically-tls_enabled
+# see https://registry.terraform.io/providers/hashicorp/http/latest/docs/data-sources/http
+data "http" "aws_rds_ca_certificates" {
+  url = "https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem"
+}
+
+# see https://docs.aws.amazon.com/documentdb/latest/developerguide/connect_programmatically.html#connect_programmatically-tls_enabled
+# see https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/config_map_v1
+resource "kubernetes_config_map_v1" "aws_rds_ca_certificates" {
+  metadata {
+    namespace = "cert-manager"
+    name      = "aws-rds-ca-certificates"
+  }
+  data = {
+    "ca-certificates.crt" = data.http.aws_rds_ca_certificates.response_body
+  }
+}
+
+# NB the bundle object will create the docdb-example-ca-certificates configmap.
+# NB this is a kubernetes cluster level object.
+# see https://cert-manager.io/docs/trust/trust-manager/api-reference/
+# see https://cert-manager.io/docs/tutorials/getting-started-with-trust-manager/
+# see https://github.com/golang/go/blob/go1.22.3/src/crypto/x509/root_linux.go
+# see https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/manifest
+resource "kubernetes_manifest" "docdb_example_ca_certificates" {
+  manifest = {
+    apiVersion = "trust.cert-manager.io/v1alpha1"
+    kind       = "Bundle"
+    metadata = {
+      name = "docdb-example-ca-certificates"
+    }
+    spec = {
+      sources = [
+        {
+          useDefaultCAs = true
+        },
+        {
+          configMap = {
+            name = kubernetes_config_map_v1.aws_rds_ca_certificates.metadata[0].name
+            key  = "ca-certificates.crt"
+          }
+        },
+      ]
+      target = {
+        namespaceSelector = {
+          matchLabels = {
+            "kubernetes.io/metadata.name" = "default"
+          }
+        }
+        configMap = {
+          key = "ca-certificates.crt"
         }
       }
     }

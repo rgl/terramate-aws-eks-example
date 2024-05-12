@@ -12,6 +12,10 @@ This will:
   * Enable the [AWS Distro for OpenTelemetry (ADOT) Operator add-on](https://docs.aws.amazon.com/eks/latest/userguide/opentelemetry.html).
   * Create the [AWS Distro for OpenTelemetry (ADOT) Collector Deployment and `adot-collector` Service](https://aws-otel.github.io).
     * Forwarding OpenTelemetry telemetry signals to [Amazon CloudWatch](https://aws.amazon.com/cloudwatch/).
+  * Install [trust-manager](https://github.com/cert-manager/trust-manager).
+    * Manages TLS CA certificate bundles.
+  * Install [reloader](https://github.com/stakater/reloader).
+    * Reloads (restarts) pods when their configmaps or secrets change.
 * Create the Elastic Container Registry (ECR) repositories declared on the
   [`source_images` global variable](config.tm.hcl), and upload the corresponding container
   images.

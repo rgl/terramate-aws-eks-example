@@ -30,7 +30,7 @@ resource "aws_docdb_cluster" "example" {
 # see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/docdb_cluster_instance
 resource "aws_docdb_cluster_instance" "example" {
   count                        = 1
-  identifier                   = "example${count.index}"
+  identifier                   = "${var.cluster_name}${count.index}"
   cluster_identifier           = aws_docdb_cluster.example.id
   instance_class               = "db.t3.medium"
   preferred_maintenance_window = "tue:00:00-tue:03:00"

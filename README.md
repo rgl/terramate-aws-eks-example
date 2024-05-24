@@ -335,7 +335,8 @@ kubectl get service,statefulset,pod,pvc,pv,sc
 Access the `hello-etcd` service from a [kubectl port-forward local port](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/):
 
 ```bash
-kubectl port-forward service/hello-etcd 6789:web & && sleep 3
+kubectl port-forward service/hello-etcd 6789:web &
+sleep 3 && printf '\n\n'
 wget -qO- http://localhost:6789 # Hello World #1!
 wget -qO- http://localhost:6789 # Hello World #2!
 wget -qO- http://localhost:6789 # Hello World #3!

@@ -14,11 +14,11 @@ data "aws_eks_cluster" "eks" {
 # see https://docs.aws.amazon.com/eks/latest/userguide/eks-add-ons.html
 # see https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html
 # see https://github.com/kubernetes-sigs/aws-ebs-csi-driver
-# see https://github.com/aws-ia/terraform-aws-eks-blueprints-addons/releases/tag/v1.16.2
+# see https://github.com/aws-ia/terraform-aws-eks-blueprints-addons/releases/tag/v1.16.3
 # see https://github.com/aws-ia/terraform-aws-eks-blueprints-addons
 module "aws_ebs_csi" {
   source  = "aws-ia/eks-blueprints-addons/aws"
-  version = "1.16.2"
+  version = "1.16.3"
 
   cluster_name      = data.aws_eks_cluster.eks.name
   cluster_endpoint  = data.aws_eks_cluster.eks.endpoint
@@ -37,7 +37,7 @@ module "aws_ebs_csi" {
 # see https://registry.terraform.io/modules/terraform-aws-modules/iam/aws/latest
 module "aws_ebs_csi_irsa" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version = "5.39.0"
+  version = "5.39.1"
 
   role_name_prefix = "${data.aws_eks_cluster.eks.name}-ebs-csi-"
 

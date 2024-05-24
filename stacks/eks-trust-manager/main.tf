@@ -14,7 +14,7 @@ resource "helm_release" "trust_manager" {
   name       = "trust-manager"
   repository = "https://charts.jetstack.io"
   chart      = "trust-manager"
-  version    = "0.9.2"
+  version    = "0.10.0"
   values = [yamlencode({
     secretTargets = {
       enabled              = true
@@ -37,7 +37,7 @@ resource "helm_release" "reloader" {
   name       = "reloader"
   repository = "https://stakater.github.io/stakater-charts"
   chart      = "reloader"
-  version    = "1.0.95"
+  version    = "1.0.97"
   values = [yamlencode({
     reloader = {
       autoReloadAll = true

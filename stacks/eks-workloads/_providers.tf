@@ -1,11 +1,11 @@
 // TERRAMATE: GENERATED AUTOMATICALLY DO NOT EDIT
 
 terraform {
-  required_version = "1.8.3"
+  required_version = "1.8.5"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "5.51.1"
+      version = "5.53.0"
     }
     external = {
       source  = "hashicorp/external"
@@ -17,7 +17,7 @@ terraform {
     }
     http = {
       source  = "hashicorp/http"
-      version = "3.4.2"
+      version = "3.4.3"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"

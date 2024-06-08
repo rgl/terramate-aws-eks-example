@@ -22,14 +22,14 @@ globals {
     otel-example = {
       name = "ghcr.io/rgl/opentelemetry-dotnet-playground"
       # renovate: datasource=docker depName=rgl/opentelemetry-dotnet-playground registryUrl=https://ghcr.io
-      tag = "0.0.6"
+      tag = "0.0.7"
     }
     kubernetes-hello = {
       # see https://hub.docker.com/repository/docker/ruilopes/kubernetes-hello
       # see https://github.com/rgl/kubernetes-hello
       name = "docker.io/ruilopes/kubernetes-hello"
       # renovate: datasource=docker depName=ruilopes/kubernetes-hello
-      tag = "v0.0.202405112126"
+      tag = "v0.0.202406081214"
     }
     # see https://github.com/rgl/aws-docdb-example/pkgs/container/aws-docdb-example
     # see https://github.com/rgl/aws-docdb-example
@@ -44,14 +44,14 @@ globals {
 # see https://github.com/hashicorp/terraform
 globals "terraform" {
   # renovate: datasource=github-releases depName=hashicorp/terraform
-  version = "1.8.3"
+  version = "1.8.5"
 }
 
 # see https://registry.terraform.io/providers/hashicorp/aws
 # see https://github.com/hashicorp/terraform-provider-aws
 globals "terraform" "providers" "aws" {
   # renovate: datasource=terraform-provider depName=hashicorp/aws
-  version = "5.51.1"
+  version = "5.53.0"
 }
 
 # see https://registry.terraform.io/providers/hashicorp/cloudinit
@@ -79,7 +79,7 @@ globals "terraform" "providers" "helm" {
 # see https://github.com/hashicorp/terraform-provider-http
 globals "terraform" "providers" "http" {
   # renovate: datasource=terraform-provider depName=hashicorp/http
-  version = "3.4.2"
+  version = "3.4.3"
 }
 
 # see https://registry.terraform.io/providers/hashicorp/local
@@ -93,7 +93,7 @@ globals "terraform" "providers" "local" {
 # see https://github.com/hashicorp/terraform-provider-time
 globals "terraform" "providers" "time" {
   # renovate: datasource=terraform-provider depName=hashicorp/time
-  version = "0.11.1"
+  version = "0.11.2"
 }
 
 # see https://registry.terraform.io/providers/hashicorp/tls

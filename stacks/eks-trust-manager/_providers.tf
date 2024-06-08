@@ -1,11 +1,11 @@
 // TERRAMATE: GENERATED AUTOMATICALLY DO NOT EDIT
 
 terraform {
-  required_version = "1.8.3"
+  required_version = "1.8.5"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "5.51.1"
+      version = "5.53.0"
     }
     cloudinit = {
       source  = "hashicorp/cloudinit"
@@ -25,7 +25,7 @@ terraform {
     }
     time = {
       source  = "hashicorp/time"
-      version = "0.11.1"
+      version = "0.11.2"
     }
     tls = {
       source  = "hashicorp/tls"

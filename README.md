@@ -430,6 +430,37 @@ kubectl get pods --all-namespaces \
   | sort --unique
 ```
 
+It should be something like:
+
+```bash
+602401143452.dkr.ecr.eu-west-1.amazonaws.com/amazon/aws-network-policy-agent:v1.1.2-eksbuild.1
+602401143452.dkr.ecr.eu-west-1.amazonaws.com/amazon-k8s-cni-init:v1.18.2-eksbuild.1
+602401143452.dkr.ecr.eu-west-1.amazonaws.com/amazon-k8s-cni:v1.18.2-eksbuild.1
+602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/aws-ebs-csi-driver:v1.31.0
+602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/coredns:v1.11.1-eksbuild.4
+602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/csi-attacher:v4.5.1-eks-1-30-4
+602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/csi-node-driver-registrar:v2.10.1-eks-1-30-4
+602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/csi-provisioner:v4.0.1-eks-1-30-4
+602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/csi-resizer:v1.10.1-eks-1-30-4
+602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/csi-snapshotter:v7.0.2-eks-1-30-4
+602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/kube-proxy:v1.29.0-minimal-eksbuild.1
+602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/livenessprobe:v2.12.0-eks-1-30-4
+960774936715.dkr.ecr.eu-west-1.amazonaws.com/aws-eks-example-dev/docdb-example:0.0.1
+960774936715.dkr.ecr.eu-west-1.amazonaws.com/aws-eks-example-dev/kubernetes-hello:v0.0.202406081214
+960774936715.dkr.ecr.eu-west-1.amazonaws.com/aws-eks-example-dev/otel-example:0.0.7
+ghcr.io/stakater/reloader:v1.0.105
+public.ecr.aws/aws-observability/adot-operator:0.94.1
+public.ecr.aws/aws-observability/aws-otel-collector:v0.38.1
+public.ecr.aws/aws-observability/mirror-kube-rbac-proxy:v0.15.0
+public.ecr.aws/eks/aws-load-balancer-controller:v2.7.1
+quay.io/jetstack/cert-manager-cainjector:v1.14.3
+quay.io/jetstack/cert-manager-controller:v1.14.3
+quay.io/jetstack/cert-manager-package-debian:20210119.0
+quay.io/jetstack/cert-manager-webhook:v1.14.3
+quay.io/jetstack/trust-manager:v0.11.0
+registry.k8s.io/external-dns/external-dns:v0.14.0
+```
+
 Log in the container registry:
 
 **NB** You are logging in at the registry level. You are not logging in at the

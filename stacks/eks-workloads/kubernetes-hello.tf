@@ -228,6 +228,30 @@ resource "kubernetes_deployment_v1" "kubernetes_hello" {
         container {
           name  = "kubernetes-hello"
           image = local.kubernetes_hello_image
+          # configure the go runtime to honour the k8s memory and cpu
+          # resource limits.
+          # NB resourceFieldRef will cast the limits to bytes and integer
+          #    number of cpus (rounding up to the nearest integer).
+          # see https://pkg.go.dev/runtime
+          # see https://www.riverphillips.dev/blog/go-cfs/
+          # see https://github.com/golang/go/issues/33803
+          # see https://github.com/traefik/traefik-helm-chart/pull/1029
+          env {
+            name = "GOMEMLIMIT"
+            value_from {
+              resource_field_ref {
+                resource = "limits.memory"
+              }
+            }
+          }
+          env {
+            name = "GOMAXPROCS"
+            value_from {
+              resource_field_ref {
+                resource = "limits.cpu"
+              }
+            }
+          }
           # see https://github.com/kubernetes/kubernetes/blob/master/test/e2e/common/downward_api.go
           env {
             name = "POD_UID"

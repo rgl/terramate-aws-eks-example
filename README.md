@@ -307,6 +307,7 @@ while [ -z "$(dig +short "$kubernetes_hello_host" "@$ingress_domain_name_server"
 while [ -z "$(dig +short "$kubernetes_hello_host")" ]; do sleep 5; done && dig "$kubernetes_hello_host"
 # finally, access the service.
 wget -qO- "$kubernetes_hello_url"
+xdg-open "$kubernetes_hello_url"
 ```
 
 Audit the `kubernetes-example` Ingress TLS implementation:

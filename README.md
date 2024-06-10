@@ -394,7 +394,7 @@ Access the `docdb-example` ClusterIP Service from a [kubectl port-forward local 
 ```bash
 kubectl port-forward service/docdb-example 6789:80 &
 sleep 3 && printf '\n\n'
-wget -qO- http://localhost:6789
+wget -qO- http://localhost:6789 && printf '\n\n'
 kill %1 && sleep 3
 ```
 
@@ -412,6 +412,7 @@ while [ -z "$(dig +short "$docdb_example_host" "@$ingress_domain_name_server")" 
 while [ -z "$(dig +short "$docdb_example_host")" ]; do sleep 5; done && dig "$docdb_example_host"
 # finally, access the service.
 wget -qO- "$docdb_example_url"
+xdg-open "$docdb_example_url"
 ```
 
 Verify the trusted CA certificates, this should include the Amazon RDS CA

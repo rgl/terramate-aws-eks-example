@@ -7,6 +7,7 @@ This creates an example kubernetes cluster hosted in the [AWS Elastic Kubernetes
 This will:
 
 * Create an Elastic Kubernetes Service (EKS)-based Kubernetes cluster.
+  * Use the [Bottlerocket OS](https://aws.amazon.com/bottlerocket/).
   * Enable the [VPC CNI cluster add-on](https://docs.aws.amazon.com/eks/latest/userguide/managing-vpc-cni.html).
   * Enable the [EBS CSI cluster add-on](https://docs.aws.amazon.com/eks/latest/userguide/eks-add-ons.html).
   * Enable the [AWS Distro for OpenTelemetry (ADOT) Operator add-on](https://docs.aws.amazon.com/eks/latest/userguide/opentelemetry.html).
@@ -205,7 +206,7 @@ Get the cluster `kubeconfig.yml` configuration file:
 
 ```bash
 export KUBECONFIG="$PWD/kubeconfig.yml"
-rm "$KUBECONFIG"
+rm -f "$KUBECONFIG"
 aws eks update-kubeconfig \
   --region "$(terramate run -C stacks/eks-workloads terraform output -raw region)" \
   --name "$(terramate run -C stacks/eks-workloads terraform output -raw cluster_name)"
@@ -591,9 +592,6 @@ GITHUB_COM_TOKEN='YOUR_GITHUB_PERSONAL_TOKEN' ./renovate.sh
   * See https://github.com/terramate-io/terramate/discussions/1090#discussioncomment-6659130
 * OpenID Connect Provider for EKS (aka [Enable IAM Roles for Service Accounts (IRSA)](https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/setting-up-enable-IAM.html)) is enabled.
   * a [aws_iam_openid_connect_provider resource](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_openid_connect_provider) is created.
-* The EKS nodes virtual machines boot from a customizable Amazon Machine Image (AMI).
-  * This example uses the Amazon Linux 2 AMI.
-  * The official AMIs source code is available at the [Amazon EKS AMI awslabs/amazon-eks-ami repository](https://github.com/awslabs/amazon-eks-ami).
 
 # References
 

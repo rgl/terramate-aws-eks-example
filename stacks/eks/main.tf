@@ -1,11 +1,3 @@
-# e.g. 1.29.0-20240213
-# see https://docs.aws.amazon.com/eks/latest/userguide/update-managed-node-group.html
-# see https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-ami.html
-# see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_node_group#tracking-the-latest-eks-node-group-ami-releases
-data "aws_ssm_parameter" "eks_ami_release_version" {
-  name = "/aws/service/eks/optimized-ami/${var.cluster_version}/amazon-linux-2/recommended/release_version"
-}
-
 # the kubernetes cluster.
 # see https://registry.terraform.io/modules/terraform-aws-modules/eks/aws
 # see https://github.com/terraform-aws-modules/terraform-aws-eks
@@ -49,9 +41,13 @@ module "eks" {
 
   eks_managed_node_groups = {
     default = {
-      instance_types       = ["m5.large"]
-      force_update_version = true
-      release_version      = nonsensitive(data.aws_ssm_parameter.eks_ami_release_version.value)
+      # use the bottlerocket os.
+      # see https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-ami-bottlerocket.html
+      # see https://docs.aws.amazon.com/eks/latest/userguide/update-managed-node-group.html
+      # see https://github.com/terraform-aws-modules/terraform-aws-eks/blob/v20.13.1/modules/eks-managed-node-group/main.tf#L351
+      ami_type = "BOTTLEROCKET_x86_64"
+
+      instance_types = ["m5.large"]
 
       desired_size = 1
       min_size     = 1

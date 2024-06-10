@@ -322,9 +322,12 @@ xdg-open https://www.ssllabs.com/ssltest/
 Deploy the [example hello-etcd stateful application](https://github.com/rgl/hello-etcd):
 
 ```bash
+rm -rf tmp/hello-etcd
 install -d tmp/hello-etcd
 pushd tmp/hello-etcd
-wget -qO- https://raw.githubusercontent.com/rgl/hello-etcd/v0.0.2/manifest.yml \
+# renovate: datasource=docker depName=rgl/hello-etcd registryUrl=https://ghcr.io
+hello_etcd_version='0.0.3'
+wget -qO- "https://raw.githubusercontent.com/rgl/hello-etcd/v${hello_etcd_version}/manifest.yml" \
   | perl -pe 's,(storageClassName:).+,$1 gp2,g' \
   | perl -pe 's,(storage:).+,$1 100Mi,g' \
   > manifest.yml

@@ -37,7 +37,7 @@ resource "helm_release" "reloader" {
   name       = "reloader"
   repository = "https://stakater.github.io/stakater-charts"
   chart      = "reloader"
-  version    = "1.0.105"
+  version    = "1.0.116"
   values = [yamlencode({
     reloader = {
       autoReloadAll = true

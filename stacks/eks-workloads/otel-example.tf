@@ -148,6 +148,10 @@ resource "kubernetes_deployment_v1" "otel_example" {
             name  = "ASPNETCORE_URLS"
             value = "http://+:8000"
           }
+          env {
+            name  = "QUOTES_BASE_URL"
+            value = "https://${local.otel_example_fqdn}"
+          }
           port {
             name           = "web"
             container_port = 8000

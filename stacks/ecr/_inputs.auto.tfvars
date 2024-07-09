@@ -8,11 +8,11 @@ images = {
   }
   kubernetes-hello = {
     name = "docker.io/ruilopes/kubernetes-hello"
-    tag  = "v0.0.202406081214"
+    tag  = "v0.0.202406151349"
   }
   otel-example = {
     name = "ghcr.io/rgl/opentelemetry-dotnet-playground"
-    tag  = "0.0.7"
+    tag  = "0.0.8"
   }
 }
 project              = "aws-eks-example"

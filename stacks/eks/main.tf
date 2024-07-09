@@ -3,7 +3,7 @@
 # see https://github.com/terraform-aws-modules/terraform-aws-eks
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "20.13.1"
+  version = "20.17.2"
 
   cluster_name                   = var.cluster_name
   cluster_version                = var.cluster_version
@@ -44,7 +44,7 @@ module "eks" {
       # use the bottlerocket os.
       # see https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-ami-bottlerocket.html
       # see https://docs.aws.amazon.com/eks/latest/userguide/update-managed-node-group.html
-      # see https://github.com/terraform-aws-modules/terraform-aws-eks/blob/v20.13.1/modules/eks-managed-node-group/main.tf#L351
+      # see https://github.com/terraform-aws-modules/terraform-aws-eks/blob/v20.17.2/modules/eks-managed-node-group/main.tf#L351
       ami_type = "BOTTLEROCKET_x86_64"
 
       instance_types = ["m5.large"]

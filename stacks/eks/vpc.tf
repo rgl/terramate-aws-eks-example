@@ -16,7 +16,7 @@ data "aws_availability_zones" "available" {
 # see https://github.com/terraform-aws-modules/terraform-aws-vpc
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "5.8.1"
+  version = "5.9.0"
 
   name = var.cluster_name
 

@@ -275,6 +275,7 @@ Access the `otel-example` Ingress from the Internet:
 
 ```bash
 wget -qO- "$otel_example_url/quote" | jq
+wget -qO- "$otel_example_url/quotetext"
 ```
 
 Audit the `otel-example` Ingress TLS implementation:
@@ -441,19 +442,19 @@ It should be something like:
 602401143452.dkr.ecr.eu-west-1.amazonaws.com/amazon/aws-network-policy-agent:v1.1.2-eksbuild.1
 602401143452.dkr.ecr.eu-west-1.amazonaws.com/amazon-k8s-cni-init:v1.18.2-eksbuild.1
 602401143452.dkr.ecr.eu-west-1.amazonaws.com/amazon-k8s-cni:v1.18.2-eksbuild.1
-602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/aws-ebs-csi-driver:v1.31.0
+602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/aws-ebs-csi-driver:v1.32.0
 602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/coredns:v1.11.1-eksbuild.4
-602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/csi-attacher:v4.5.1-eks-1-30-4
-602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/csi-node-driver-registrar:v2.10.1-eks-1-30-4
-602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/csi-provisioner:v4.0.1-eks-1-30-4
-602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/csi-resizer:v1.10.1-eks-1-30-4
-602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/csi-snapshotter:v7.0.2-eks-1-30-4
+602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/csi-attacher:v4.6.1-eks-1-30-8
+602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/csi-node-driver-registrar:v2.11.0-eks-1-30-8
+602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/csi-provisioner:v5.0.1-eks-1-30-8
+602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/csi-resizer:v1.11.1-eks-1-30-8
+602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/csi-snapshotter:v8.0.1-eks-1-30-8
 602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/kube-proxy:v1.29.0-minimal-eksbuild.1
-602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/livenessprobe:v2.12.0-eks-1-30-4
+602401143452.dkr.ecr.eu-west-1.amazonaws.com/eks/livenessprobe:v2.13.0-eks-1-30-8
 960774936715.dkr.ecr.eu-west-1.amazonaws.com/aws-eks-example-dev/docdb-example:0.0.1
-960774936715.dkr.ecr.eu-west-1.amazonaws.com/aws-eks-example-dev/kubernetes-hello:v0.0.202406081214
-960774936715.dkr.ecr.eu-west-1.amazonaws.com/aws-eks-example-dev/otel-example:0.0.7
-ghcr.io/stakater/reloader:v1.0.105
+960774936715.dkr.ecr.eu-west-1.amazonaws.com/aws-eks-example-dev/kubernetes-hello:v0.0.202406151349
+960774936715.dkr.ecr.eu-west-1.amazonaws.com/aws-eks-example-dev/otel-example:0.0.8
+ghcr.io/stakater/reloader:v1.0.116
 public.ecr.aws/aws-observability/adot-operator:0.94.1
 public.ecr.aws/aws-observability/aws-otel-collector:v0.38.1
 public.ecr.aws/aws-observability/mirror-kube-rbac-proxy:v0.15.0
